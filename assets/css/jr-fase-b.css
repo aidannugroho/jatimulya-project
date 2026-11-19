@@ -1,0 +1,432 @@
+/* ============================================================
+   Jatimulya Residence — Fase B: Konversi
+   Form 2 langkah, kalkulator DP, pemilih tipe, sticky CTA,
+   jadwal survei. Load setelah jr-design.css.
+   ============================================================ */
+
+/* ---------- Palette Fase B ---------- */
+:root {
+  --jr-terakota: #a64b2a;
+  --jr-terakota-hover: #7e3519;
+  --jr-hijau: #1f4d3a;
+  --jr-krem: #faf7f2;
+  --jr-border: #e8e0d4;
+  --jr-arang: #2e2a26;
+  --jr-whatsapp: #25d366;
+}
+
+/* ---------- 2-step form ---------- */
+.jr-kontak-section {
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+}
+.jr-section-head h2.jr-h2 {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 42px !important;
+  color: var(--jr-arang) !important;
+  margin: 0 0 8px 0 !important;
+}
+.jr-lead {
+  font-size: 17px !important;
+  color: #5a544e !important;
+  margin: 0 0 30px 0 !important;
+  line-height: 1.7;
+}
+.req { color: var(--jr-terakota); }
+
+.jr-progress {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8a8278;
+}
+.jr-step {
+  color: #8a8278;
+}
+.jr-step.jr-step-active {
+  color: var(--jr-terakota);
+  font-weight: 700;
+}
+.jr-progress-bar {
+  height: 4px;
+  background: #e8e0d4;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.jr-progress-fill {
+  height: 100%;
+  background: var(--jr-terakota);
+  width: 50%;
+  transition: width 0.3s ease;
+}
+
+.jr-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+@media (max-width: 544px) {
+  .jr-form-grid { grid-template-columns: 1fr; }
+}
+.jr-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.jr-form-group label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--jr-arang);
+}
+.jr-form-group input,
+.jr-form-group select,
+.jr-form-group textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  border: 1px solid var(--jr-border);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--jr-arang);
+  box-sizing: border-box;
+}
+.jr-form-group input:focus,
+.jr-form-group select:focus,
+.jr-form-group textarea:focus {
+  outline: 2px solid var(--jr-terakota);
+  border-color: var(--jr-terakota);
+}
+.jr-form-group textarea { min-height: 110px; resize: vertical; }
+
+.jr-form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+.jr-btn-prev,
+.jr-btn-next,
+.jr-btn-submit {
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 16px;
+  padding: 14px 26px;
+  transition: all 0.2s ease;
+}
+.jr-btn-next,
+.jr-btn-submit {
+  background: var(--jr-terakota);
+  color: #fff;
+}
+.jr-btn-next:hover,
+.jr-btn-submit:hover {
+  background: var(--jr-terakota-hover);
+}
+.jr-btn-prev {
+  background: transparent;
+  border: 1px solid var(--jr-border);
+  color: var(--jr-arang);
+}
+.jr-btn-prev:hover { background: #f1e9dd; }
+.jr-btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.jr-form-step { display: none; }
+.jr-form-step.jr-form-step-active { display: block; animation: jrFade 0.35s ease; }
+@keyframes jrFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.jr-form-status {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: 6px;
+  font-size: 15px;
+  display: none;
+}
+.jr-form-status.ok { background: #eaf4ee; color: var(--jr-hijau); border: 1px solid #bfe3ca; display: block; }
+.jr-form-status.err { background: #fdecea; color: #a64b2a; border: 1px solid #f2c4b7; display: block; }
+
+.jr-wa-direct {
+  margin-top: 30px;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid var(--jr-border);
+  border-radius: 8px;
+  text-align: center;
+}
+.jr-btn.wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--jr-whatsapp);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 14px 24px;
+  margin-bottom: 10px;
+}
+.jr-btn.wa:hover { opacity: 0.92; }
+.jr-note { font-size: 14px; color: #6b645c; margin: 0; }
+
+/* ---------- Kalkulator DP ---------- */
+.jr-kalkulator {
+  background: #fff;
+  border: 1px solid var(--jr-border);
+  border-radius: 10px;
+  padding: 40px;
+  margin-top: 40px;
+}
+.jr-kalk-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 26px;
+}
+@media (max-width: 544px) { .jr-kalk-grid { grid-template-columns: 1fr; } }
+.jr-kalk-control label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--jr-arang);
+  margin-bottom: 8px;
+}
+input[type="range"] { width: 100%; cursor: pointer; }
+.jr-kalk-control span {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 16px;
+  color: var(--jr-terakota);
+  font-weight: 700;
+}
+.jr-kalk-result {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  background: var(--jr-krem);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-bottom: 22px;
+}
+.jr-result-item .label {
+  font-size: 13px;
+  color: #6b645c;
+  display: block;
+  margin-bottom: 4px;
+}
+.jr-result-item .value {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--jr-arang);
+}
+.jr-btn-wa {
+  width: 100%;
+  background: var(--jr-whatsapp);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+  padding: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.jr-btn-wa:hover { opacity: 0.92; }
+@media (max-width: 544px) {
+  .jr-kalkulator { padding: 26px 20px; }
+  .jr-kalk-result { padding: 14px 18px; }
+}
+
+/* ---------- Pemilih Tipe Unit ---------- */
+.jr-unit-picker {
+  margin-top: 40px;
+}
+.jr-unit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 18px;
+}
+@media (max-width: 782px) { .jr-unit-grid { grid-template-columns: 1fr; } }
+.jr-unit-card {
+  position: relative;
+  padding: 30px 24px !important;
+  text-align: center;
+}
+.jr-unit-card h3 {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 30px !important;
+  color: var(--jr-arang) !important;
+  margin: 0 0 10px 0 !important;
+}
+.jr-unit-spec {
+  font-size: 15px;
+  color: #6b645c;
+  margin: 0 0 10px 0;
+}
+.jr-unit-price {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 19px;
+  color: var(--jr-terakota);
+  font-weight: 700;
+  margin: 0 0 18px 0;
+}
+.jr-btn-unit {
+  width: 100%;
+  background: var(--jr-terakota);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+.jr-btn-unit:hover { background: var(--jr-terakota-hover); }
+.jr-unit-note {
+  margin-top: 18px;
+  font-size: 14px;
+  color: #6b645c;
+  text-align: center;
+}
+
+/* ---------- Jadwal Survei ---------- */
+.jr-survei {
+  margin-top: 40px;
+  background: #fff;
+  border: 1px solid var(--jr-border);
+  border-radius: 10px;
+  padding: 40px;
+}
+.jr-survei-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 14px;
+  align-items: end;
+}
+@media (max-width: 782px) {
+  .jr-survei-form { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 544px) {
+  .jr-survei-form { grid-template-columns: 1fr; }
+  .jr-survei { padding: 26px 20px; }
+}
+.jr-survei-form label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--jr-arang);
+  display: block;
+  margin-bottom: 6px;
+}
+.jr-survei-form input,
+.jr-survei-form select {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  border: 1px solid var(--jr-border);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--jr-arang);
+  box-sizing: border-box;
+}
+.jr-survei-form .jr-btn-wa { width: auto; }
+
+/* ---------- Sticky CTA bar (mobile) ---------- */
+.jr-sticky-cta {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  gap: 8px;
+  background: #fff;
+  border-top: 1px solid var(--jr-border);
+  box-shadow: 0 -2px 12px rgba(46,42,38,0.10);
+  z-index: 1200;
+  padding: 8px 4px;
+  display: none; /* default hidden, shown via JS on mobile + not-at-hero */
+}
+@media (min-width: 783px) {
+  .jr-sticky-cta { display: none !important; }
+}
+.jr-sticky-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 4px;
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #fff;
+}
+.jr-sticky-item.form {
+  background: var(--jr-terakota);
+}
+.jr-sticky-item.wa {
+  background: var(--jr-whatsapp);
+}
+.jr-sticky-item:hover { opacity: 0.92; }
+
+/* ---------- Brosur page ---------- */
+.jr-brosur {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+.jr-brosur h1 {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 46px;
+  color: var(--jr-arang);
+  margin-bottom: 10px;
+}
+.jr-brosur .jr-kard {
+  border: 1px solid var(--jr-border);
+  border-radius: 10px;
+  padding: 24px;
+  margin: 24px 0;
+  background: #fff;
+}
+.jr-brosur .jr-kard h3 {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  color: var(--jr-terakota);
+  margin-top: 0;
+}
+
+/* ---------- Button utility ---------- */
+.jr-btn-solid {
+  display: inline-block;
+  background: var(--jr-terakota);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 14px 28px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.jr-btn-solid:hover { background: var(--jr-terakota-hover); }
