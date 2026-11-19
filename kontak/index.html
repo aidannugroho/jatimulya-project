@@ -5421,58 +5421,82 @@ body .wp-block-spectra-icons:where([data-spectra-id='spectra-f05574ca-icons']){f
     <p class="jr-lead">Kami membantu kamu memilih tipe rumah, menghitung budget, dan mengajukan KPR. Isi 2 langkah singkat di bawah.</p>
   </div>
 
-  <div class="jr-progress">
-    <div class="jr-step jr-step-active" data-step="1">1. Identitas</div>
-    <div class="jr-step" data-step="2">2. Detail Rumah</div>
-  </div>
-  <div class="jr-progress-bar"><div class="jr-progress-fill" id="jr-progress-fill" style="width:50%"></div></div>
-
-  <form id="jr-contact-form" novalidate>
-    <div class="jr-form-step jr-form-step-active" data-step="1">
-      <div class="jr-form-grid">
-        <div class="jr-form-group">
-          <label>Nama lengkap <span class="req">*</span></label>
-          <input type="text" name="nama" required placeholder="Contoh: Budi Santoso">
-        </div>
-        <div class="jr-form-group">
-          <label>Nomor WhatsApp <span class="req">*</span></label>
-          <input type="tel" name="whatsapp" required placeholder="Contoh: 08123456789">
-        </div>
+  <div class="jr-kontak-grid">
+    <div class="jr-kontak-main">
+      <div class="jr-progress">
+        <div class="jr-step jr-step-active" data-step="1">1. Identitas</div>
+        <div class="jr-step" data-step="2">2. Detail Rumah</div>
       </div>
-      <button type="button" class="jr-btn-next" data-from="1" data-to="2">Lanjut ke langkah 2 →</button>
+      <div class="jr-progress-bar"><div class="jr-progress-fill" id="jr-progress-fill" style="width:50%"></div></div>
+
+      <form id="jr-contact-form" novalidate>
+        <div class="jr-form-step jr-form-step-active" data-step="1">
+          <div class="jr-form-grid">
+            <div class="jr-form-group">
+              <label>Nama lengkap <span class="req">*</span></label>
+              <input type="text" name="nama" required placeholder="Contoh: Budi Santoso">
+            </div>
+            <div class="jr-form-group">
+              <label>Nomor WhatsApp <span class="req">*</span></label>
+              <input type="tel" name="whatsapp" required placeholder="Contoh: 08123456789">
+            </div>
+          </div>
+          <button type="button" class="jr-btn-next" data-from="1" data-to="2">Lanjut ke langkah 2 &rarr;</button>
+        </div>
+
+        <div class="jr-form-step" data-step="2">
+          <div class="jr-form-grid">
+            <div class="jr-form-group">
+              <label>Tipe rumah yang diminati</label>
+              <select name="tipe" id="jr-tipe-select">
+                <option value="Belum yakin">Belum yakin / mau konsultasi dulu</option>
+                <option value="Tipe A">Tipe A (LT 60 m&sup2; / LB 58 m&sup2;, 2KT 2KM)</option>
+                <option value="Tipe B">Tipe B (LT 75 m&sup2; / LB 72 m&sup2;, 2KT 2KM)</option>
+              </select>
+            </div>
+            <div class="jr-form-group">
+              <label>Pesan / pertanyaan</label>
+              <textarea name="message" rows="4" placeholder="Tuliskan kebutuhan atau pertanyaan kamu..."></textarea>
+            </div>
+          </div>
+          <div class="jr-form-actions">
+            <button type="button" class="jr-btn-prev" data-from="2" data-to="1">&larr; Kembali</button>
+            <button type="submit" class="jr-btn-submit">Kirim Konsultasi</button>
+          </div>
+        </div>
+
+        <input type="hidden" name="form-name" value="kontak-jatimulya">
+        <input type="hidden" name="_subject" value="Konsultasi Gratis - Jatimulya Residence">
+        <input type="hidden" name="_replyto" value="">
+      </form>
+
+      <div class="jr-form-status" id="jr-form-status"></div>
+
+      <div class="jr-wa-direct">
+        <a href="https://wa.me/6278777502532?text=Halo%20min%2C%20aku%20mau%20konsultasi%20tentang%20clusternya%20nih." class="jr-btn wa">Chat Langsung via WhatsApp</a>
+        <p class="jr-note">Atau hubungi langsung: <strong>0787-7750-2532</strong> &middot; Kantor buka setiap hari 10.00&ndash;16.00 WIB</p>
+      </div>
     </div>
 
-    <div class="jr-form-step" data-step="2">
-      <div class="jr-form-grid">
-        <div class="jr-form-group">
-          <label>Tipe rumah yang diminati</label>
-          <select name="tipe" id="jr-tipe-select">
-            <option value="Belum yakin">Belum yakin / mau konsultasi dulu</option>
-            <option value="Tipe A">Tipe A (LT 60 m² / LB 58 m², 2KT 2KM)</option>
-            <option value="Tipe B">Tipe B (LT 75 m² / LB 72 m², 2KT 2KM)</option>
-          </select>
+    <aside class="jr-kontak-aside" aria-labelledby="jr-aside-title">
+      <h3 class="jr-aside-title" id="jr-aside-title">Kantor Pemasaran</h3>
+      <dl class="jr-aside-list">
+        <div>
+          <dt>Alamat</dt>
+          <dd>Jl. Waru Raya No.7, Jatimulya, Kec. Tambun Sel., Kabupaten Bekasi, Jawa Barat 17510</dd>
         </div>
-        <div class="jr-form-group">
-          <label>Pesan / pertanyaan</label>
-          <textarea name="message" rows="4" placeholder="Tuliskan kebutuhan atau pertanyaan kamu..."></textarea>
+        <div>
+          <dt>Jam buka</dt>
+          <dd>Setiap hari, 10.00&ndash;16.00 WIB</dd>
         </div>
-      </div>
-      <div class="jr-form-actions">
-        <button type="button" class="jr-btn-prev" data-from="2" data-to="1">← Kembali</button>
-        <button type="submit" class="jr-btn-submit">Kirim Konsultasi</button>
-      </div>
-    </div>
-
-    <input type="hidden" name="form-name" value="kontak-jatimulya">
-    <input type="hidden" name="_subject" value="Konsultasi Gratis - Jatimulya Residence">
-    <input type="hidden" name="_replyto" value="">
-  </form>
-
-  <div class="jr-form-status" id="jr-form-status"></div>
-
-  <div class="jr-wa-direct">
-    <a href="https://wa.me/6278777502532?text=Halo%20min%2C%20aku%20mau%20konsultasi%20tentang%20clusternya%20nih." class="jr-btn wa">Chat Langsung via WhatsApp</a>
-    <p class="jr-note">Atau hubungi langsung: <strong>0787-7750-2532</strong> · Kantor buka setiap hari 10.00–16.00 WIB</p>
+        <div>
+          <dt>Telepon / WhatsApp</dt>
+          <dd><a href="https://wa.me/6278777502532?text=Halo%20min%2C%20aku%20mau%20konsultasi%20tentang%20clusternya%20nih.">0787-7750-2532</a></dd>
+        </div>
+      </dl>
+      <a class="jr-aside-cta" href="https://maps.app.goo.gl/kD6PozqwmK4ACue79" target="_blank" rel="noopener">Buka peta lokasi</a>
+      <a class="jr-aside-cta jr-aside-cta-outline" href="/brosur">Lihat brosur ringkas</a>
+    </aside>
   </div>
 </section>
 

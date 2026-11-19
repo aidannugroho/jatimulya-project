@@ -8,13 +8,13 @@
 @media (min-width: 922px) {
   h1,
   .entry-content :where(h1) {
-    font-size: 52px !important;
-    line-height: 1.35 !important;
+    font-size: 56px !important;
+    line-height: 1.3 !important;
   }
 }
 
 body {
-  font-size: 16px !important;
+  font-size: 17px !important;
   line-height: 1.75 !important;
 }
 
@@ -164,4 +164,54 @@ body {
   .site-footer {
     padding-bottom: 68px;
   }
+}
+
+/* ---------- 11. Kesimetrisan & keterbacaan section kustom ----------
+   Semua judul + lead section rata tengah, lebar baca dibatasi,
+   dan angka rupiah memakai tabular-nums agar kolom sejajar. */
+.jr-section .jr-h2,
+.jr-section .jr-lead,
+.jr-section-head .jr-h2,
+.jr-section-head .jr-lead,
+.jr-kalkulator .jr-h2,
+.jr-kalkulator .jr-lead,
+.jr-unit-picker .jr-h2,
+.jr-survei .jr-h2,
+.jr-survei .jr-lead {
+  text-align: center;
+}
+
+.jr-section .jr-lead,
+.jr-section-head .jr-lead,
+.jr-kalkulator .jr-lead,
+.jr-survei .jr-lead {
+  max-width: 68ch;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Catatan kecil dan judul tabel ikut rata tengah. */
+.jr-compare-note,
+.jr-unit-note {
+  text-align: center;
+  max-width: 72ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.jr-kalk-control span,
+.jr-result-item .value,
+.jr-unit-price,
+.jr-table td {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Subjudul hero: batasi panjang baris, tetap rata tengah. */
+.entry-content p[data-spectra-id='spectra-desc-6b316809'] {
+  max-width: 60ch;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  font-size: 18px !important;
+  line-height: 1.75 !important;
 }
