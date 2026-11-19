@@ -117,3 +117,51 @@ body {
 .ast-header-search {
   display: none !important;
 }
+
+/* ---------- 8. Container konten kustom ----------
+   Dipakai section Fase B/C yang dipasang di luar .ast-container. */
+.jr-container {
+  width: 100%;
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 782px) {
+  .jr-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 544px) {
+  .jr-container {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
+
+/* ---------- 9. Tipografi section kustom ---------- */
+.jr-h2 {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 42px !important;
+  line-height: 1.25;
+  color: #2e2a26 !important;
+  margin: 0 0 10px 0 !important;
+}
+
+@media (max-width: 921px) {
+  .jr-h2 {
+    font-size: 30px !important;
+  }
+}
+
+/* ---------- 10. Ruang untuk sticky CTA di mobile ---------- */
+@media (max-width: 782px) {
+  .site-footer {
+    padding-bottom: 68px;
+  }
+}

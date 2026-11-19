@@ -180,10 +180,23 @@
   /* ---------- Sticky CTA mobile: hilang saat di hero (atas halaman) ---------- */
   var sticky = document.getElementById("jr-sticky-cta");
   if (sticky) {
-    function toggleSticky() {
+    var stickyPending = false;
+
+    function applySticky() {
+      stickyPending = false;
       var show = window.innerWidth < 783 && window.scrollY > 260;
       sticky.style.display = show ? "flex" : "none";
     }
+
+    /* Terapkan langsung, lalu ulangi di frame berikutnya untuk berjaga-jaga
+       kalau event scroll datang sebelum posisi terbaru diterapkan. */
+    function toggleSticky() {
+      applySticky();
+      if (stickyPending || typeof window.requestAnimationFrame !== "function") return;
+      stickyPending = true;
+      window.requestAnimationFrame(applySticky);
+    }
+
     window.addEventListener("scroll", toggleSticky, { passive: true });
     window.addEventListener("resize", toggleSticky);
     toggleSticky();

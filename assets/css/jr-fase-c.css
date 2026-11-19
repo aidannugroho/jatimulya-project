@@ -1,0 +1,261 @@
+/* ============================================================
+   Jatimulya Residence — Fase C: Kepercayaan
+   Trust bar, tabel perbandingan tipe, portofolio video,
+   ulasan Google Maps, FAQ accordion. Load setelah jr-fase-b.css.
+   ============================================================ */
+
+/* ---------- Trust bar (di bawah hero) ---------- */
+.jr-trust {
+  background: #1f4d3a;
+  padding: 26px 0;
+  margin: 0 0 8px 0;
+}
+.jr-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.jr-trust-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 14px;
+  border-left: 2px solid rgba(232, 224, 212, 0.35);
+}
+.jr-trust-item:first-child { border-left: none; padding-left: 0; }
+.jr-trust-kicker {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: #faf7f2;
+  line-height: 1.3;
+}
+.jr-trust-label {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #d8cfc2;
+}
+@media (max-width: 921px) {
+  .jr-trust-grid { grid-template-columns: 1fr 1fr; gap: 16px 20px; }
+  .jr-trust-item:nth-child(3) { border-left: none; padding-left: 0; }
+}
+@media (max-width: 544px) {
+  .jr-trust { padding: 22px 0; }
+  .jr-trust-grid { grid-template-columns: 1fr 1fr; gap: 14px 16px; }
+  .jr-trust-kicker { font-size: 16px; }
+  .jr-trust-label { font-size: 12px; }
+}
+
+/* ---------- Section shell ---------- */
+.jr-section {
+  padding: 64px 0;
+}
+.jr-section + .jr-section { padding-top: 8px; }
+.jr-section .jr-h2,
+.jr-section-head .jr-h2 {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 42px !important;
+  line-height: 1.25;
+  color: #2e2a26 !important;
+  margin: 0 0 10px 0 !important;
+}
+@media (max-width: 921px) {
+  .jr-section { padding: 44px 0; }
+  .jr-section .jr-h2 { font-size: 30px !important; }
+}
+
+/* ---------- Tabel perbandingan ---------- */
+.jr-table-wrap {
+  margin-top: 26px;
+  border: 1px solid #e8e0d4;
+  border-radius: 10px;
+  background: #fff;
+  overflow-x: auto;
+}
+.jr-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  min-width: 520px;
+}
+.jr-table th,
+.jr-table td {
+  padding: 15px 20px;
+  text-align: left;
+  border-bottom: 1px solid #e8e0d4;
+  vertical-align: top;
+}
+.jr-table thead th {
+  background: #faf7f2;
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 16px;
+  color: #2e2a26;
+  border-bottom: 2px solid #a64b2a;
+}
+.jr-table thead th:first-child { color: #6b645c; }
+.jr-table tbody th {
+  font-weight: 600;
+  color: #6b645c;
+  font-size: 15px;
+  width: 34%;
+}
+.jr-table tbody td { color: #2e2a26; font-weight: 600; }
+.jr-table tbody tr:last-child th,
+.jr-table tbody tr:last-child td { border-bottom: none; }
+.jr-table tbody tr:hover td { background: #fdfbf8; }
+@media (max-width: 600px) {
+  .jr-table { min-width: 0; font-size: 14px; }
+  .jr-table thead th { font-size: 14px; padding: 12px 10px; }
+  .jr-table tbody th { font-size: 13px; width: 31%; padding: 12px 10px; }
+  .jr-table tbody td { padding: 12px 10px; }
+}
+.jr-compare-note {
+  margin: 16px 0 0 0;
+  font-size: 15px;
+  color: #6b645c;
+}
+.jr-compare-note a {
+  color: #a64b2a;
+  font-weight: 700;
+  text-decoration: none;
+}
+.jr-compare-note a:hover { text-decoration: underline; }
+
+/* ---------- Portofolio video ---------- */
+.jr-video {
+  margin: 28px 0 0 0;
+  padding: 0;
+}
+.jr-video video {
+  display: block;
+  width: 100%;
+  max-width: 860px;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid #e8e0d4;
+  background: #1a1714;
+}
+.jr-video figcaption {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #6b645c;
+}
+
+/* ---------- Ulasan Google Maps ---------- */
+.jr-review-card {
+  margin-top: 26px;
+  background: #fff;
+  border: 1px solid #e8e0d4;
+  border-radius: 10px;
+  padding: 34px;
+}
+.jr-review-lead {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 22px;
+  line-height: 1.5;
+  color: #2e2a26;
+  margin: 0 0 10px 0;
+}
+.jr-review-text {
+  font-size: 16px;
+  color: #5a544e;
+  margin: 0 0 22px 0;
+}
+.jr-review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.jr-btn-outline {
+  display: inline-block;
+  border: 1px solid #a64b2a;
+  color: #a64b2a;
+  background: transparent;
+  border-radius: 6px;
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 13px 26px;
+  text-decoration: none;
+}
+.jr-btn-outline:hover { background: #a64b2a; color: #fff; }
+@media (max-width: 544px) {
+  .jr-review-card { padding: 24px 20px; }
+  .jr-review-lead { font-size: 19px; }
+  .jr-review-actions { flex-direction: column; }
+  .jr-review-actions .jr-btn-solid,
+  .jr-review-actions .jr-btn-outline { text-align: center; }
+}
+
+/* ---------- FAQ accordion ---------- */
+.jr-faq { margin-top: 26px; }
+.jr-faq details {
+  border: 1px solid #e8e0d4;
+  border-radius: 8px;
+  background: #fff;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.jr-faq details[open] { border-color: #cdbfa9; }
+.jr-faq summary {
+  cursor: pointer;
+  padding: 18px 52px 18px 22px;
+  position: relative;
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #2e2a26;
+  list-style: none;
+}
+.jr-faq summary::-webkit-details-marker { display: none; }
+.jr-faq summary::after {
+  content: "+";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 22px;
+  line-height: 1;
+  color: #a64b2a;
+}
+.jr-faq details[open] summary::after { content: "–"; }
+.jr-faq summary:hover { background: #fdfbf8; }
+.jr-faq summary:focus-visible {
+  outline: 2px solid #a64b2a;
+  outline-offset: -2px;
+}
+.jr-faq .jr-faq-body {
+  padding: 0 22px 20px 22px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #5a544e;
+}
+.jr-faq .jr-faq-body p { margin: 0 0 10px 0; }
+.jr-faq .jr-faq-body p:last-child { margin-bottom: 0; }
+.jr-faq .jr-faq-body a { color: #a64b2a; font-weight: 600; }
+
+/* ---------- Helper ---------- */
+.jr-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Galeri caption (tentang-kami) ---------- */
+.jr-galeri-caption {
+  max-width: 760px;
+  margin: 0 auto 8px auto !important;
+  text-align: center;
+  font-size: 15px;
+  color: #6b645c;
+}
