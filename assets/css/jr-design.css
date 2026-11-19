@@ -1,0 +1,119 @@
+/* ============================================================
+   Jatimulya Residence — Fase A design overrides
+   Palette: Terakota #A64B2A · Hijau Hutan #1F4D3A · Krem #FAF7F2
+   Loaded last so it wins over theme/builder styles.
+   ============================================================ */
+
+/* ---------- 1. Tipografi ---------- */
+@media (min-width: 922px) {
+  h1,
+  .entry-content :where(h1) {
+    font-size: 52px !important;
+    line-height: 1.35 !important;
+  }
+}
+
+body {
+  font-size: 16px !important;
+  line-height: 1.75 !important;
+}
+
+@media (min-width: 922px) {
+  .main-header-menu > li > a {
+    font-size: 17px !important;
+  }
+}
+
+/* ---------- 2. Container & ritme section ---------- */
+.ast-container {
+  max-width: 1180px !important;
+}
+
+.entry-content > .wp-block-spectra-container:not(:first-child) {
+  padding-top: 112px !important;
+  padding-bottom: 112px !important;
+}
+
+@media (max-width: 782px) {
+  .entry-content > .wp-block-spectra-container:not(:first-child) {
+    padding-top: 72px !important;
+    padding-bottom: 72px !important;
+  }
+}
+
+/* ---------- 3. Tombol: solid terakota ---------- */
+.wp-block-spectra-button,
+.wp-block-spectra-button a,
+.wp-block-button__link {
+  background-color: #a64b2a !important;
+  border-color: #a64b2a !important;
+  color: #ffffff !important;
+}
+
+.wp-block-spectra-button a:hover,
+.wp-block-button__link:hover {
+  background-color: #7e3519 !important;
+  border-color: #7e3519 !important;
+  color: #ffffff !important;
+}
+
+/* ---------- 4. Kartu layanan: putih solid + border tipis ---------- */
+.jr-card {
+  background-color: #ffffff !important;
+  border: 1px solid #e8e0d4 !important;
+  box-shadow: 2px 2px 12px rgba(46, 42, 38, 0.06) !important;
+}
+
+.jr-card::before {
+  background-color: #ffffff !important;
+}
+
+/* ---------- 5. Grid kartu responsif ----------
+   Fix: kartu sempit 123px di 481-782px (teks 1 kata/baris)
+   dan grid Layanan 3+1 yang tidak seimbang. */
+.jr-cards-2x2 {
+  flex-wrap: wrap !important;
+}
+
+.jr-cards-2x2 > .jr-card {
+  width: calc(50% - 15px) !important;
+}
+
+@media (max-width: 921px) {
+  .jr-cards {
+    flex-wrap: wrap !important;
+    row-gap: 24px !important;
+  }
+
+  .jr-cards > .jr-card {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 544px) {
+  .jr-cards > .jr-card {
+    padding: 40px 28px !important;
+  }
+}
+
+/* ---------- 6. Footer hijau hutan (teks krem) ---------- */
+.site-primary-footer-wrap,
+.site-primary-footer-wrap
+  :is(h2, h3, p, li, a, span, .widget-title, .wp-block-heading):not(.wp-social-link):not(.wp-block-social-link-anchor) {
+  color: #faf7f2 !important;
+}
+
+.site-primary-footer-wrap a:hover:not(.wp-block-social-link-anchor) {
+  color: #b8893b !important;
+}
+
+.site-primary-footer-wrap .widget-title {
+  border-bottom-color: rgba(250, 247, 242, 0.35) !important;
+}
+
+/* ---------- 7. Sembunyikan search header ----------
+   Search WordPress tidak berfungsi di site statis
+   (selalu mengarah ke homepage). Disembunyikan dulu. */
+.ast-header-search {
+  display: none !important;
+}

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jatimulya-project.pages.dev/sitemap.xml

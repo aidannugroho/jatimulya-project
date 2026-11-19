@@ -1,0 +1,19 @@
+/* Jatimulya Residence — self-hosted fonts (Fase A)
+   Local woff2, loaded outside the cookie consent gate so the
+   brand typography renders for every first-time visitor. */
+
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('LibreBaskerville-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('OpenSans-Regular.woff2') format('woff2');
+}
