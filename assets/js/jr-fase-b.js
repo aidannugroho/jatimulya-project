@@ -57,6 +57,7 @@
             status.style.display = "block";
             form.reset();
             showStep(1);
+            document.dispatchEvent(new CustomEvent("jr:form-sukses"));
           } else {
             throw new Error("gagal");
           }
