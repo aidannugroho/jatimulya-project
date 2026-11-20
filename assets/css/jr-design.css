@@ -428,12 +428,14 @@ body.page-id-72 [data-spectra-id='128a2ebc'] {
     column-gap: 48px !important;
   }
 }
-/* ---------- 14. Halaman Layanan: konten selebar window ----------
-   Semula 1180px di tengah dengan gutter 133px; kini memakai lebar
-   window dengan gutter tetap 40px (lebih kecil di layar sempit). */
+/* ---------- 14. Halaman Layanan: konten simetris dengan margin ----------
+   Tidak memenuhi lebar window sepenuhnya; dibatasi max-width dan
+   dikasih margin kiri-kanan agar blok 4 layanan rata dan simetris. */
 body.page-id-74 .site-content > .ast-container {
   width: auto !important;
-  max-width: none !important;
+  max-width: 1180px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   padding-left: 40px !important;
   padding-right: 40px !important;
 }
