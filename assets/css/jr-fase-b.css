@@ -179,7 +179,7 @@
   padding: 14px 24px;
   margin-bottom: 10px;
 }
-.jr-btn.wa:hover { opacity: 0.92; }
+.jr-btn.wa:hover { opacity: 0.92; color: #fff; }
 .jr-note { font-size: 15px; color: #6b645c; margin: 0; line-height: 1.6; }
 
 /* ---------- Kalkulator DP ---------- */
@@ -280,7 +280,7 @@ input[type="range"] { width: 100%; cursor: pointer; accent-color: #a64b2a; }
   gap: 10px;
   text-decoration: none;
 }
-.jr-btn-wa:hover { opacity: 0.92; }
+.jr-btn-wa:hover { opacity: 0.92; color: #fff; }
 @media (max-width: 544px) {
   .jr-kalkulator { padding: 26px 20px; }
   .jr-kalk-result { padding: 14px 18px; }
@@ -340,7 +340,7 @@ input[type="range"] { width: 100%; cursor: pointer; accent-color: #a64b2a; }
   text-decoration: none;
   display: inline-block;
 }
-.jr-btn-unit:hover { background: var(--jr-terakota-hover); }
+.jr-btn-unit:hover { background: var(--jr-terakota-hover); color: #fff; }
 .jr-unit-note {
   margin-top: 20px;
   font-size: 16px;
@@ -435,7 +435,7 @@ input[type="range"] { width: 100%; cursor: pointer; accent-color: #a64b2a; }
 .jr-sticky-item.wa {
   background: var(--jr-whatsapp);
 }
-.jr-sticky-item:hover { opacity: 0.92; }
+.jr-sticky-item:hover { opacity: 0.92; color: #fff; }
 
 /* ---------- Brosur page ---------- */
 .jr-brosur {
@@ -476,7 +476,7 @@ input[type="range"] { width: 100%; cursor: pointer; accent-color: #a64b2a; }
   text-decoration: none;
   cursor: pointer;
 }
-.jr-btn-solid:hover { background: var(--jr-terakota-hover); }
+.jr-btn-solid:hover { background: var(--jr-terakota-hover); color: #fff; }
 
 /* ---------- Blok konsultasi 2 kolom (form + info kantor) ---------- */
 .jr-kontak-grid {
@@ -591,7 +591,7 @@ input[type="range"] { width: 100%; cursor: pointer; accent-color: #a64b2a; }
   text-align: center;
 }
 
-.jr-aside-cta:hover { background: #163b2c; }
+.jr-aside-cta:hover { background: #163b2c; color: #fff; }
 
 .jr-aside-cta:focus-visible,
 .jr-aside-list dd a:focus-visible {

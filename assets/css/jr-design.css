@@ -79,6 +79,24 @@ body {
   width: calc(50% - 15px) !important;
 }
 
+/* Tinggi & padding kartu layanan dibuat seragam di desktop.
+   Kartu pertama semula horizontal sehingga lebih tinggi dari dua lainnya. */
+@media (min-width: 922px) {
+  .jr-cards {
+    align-items: stretch !important;
+    gap: 30px !important;
+  }
+
+  .jr-cards > .jr-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    height: auto !important;
+    padding: 44px 38px !important;
+  }
+}
+
 @media (max-width: 921px) {
   .jr-cards {
     flex-wrap: wrap !important;
@@ -214,4 +232,242 @@ body {
   margin-right: auto !important;
   font-size: 18px !important;
   line-height: 1.75 !important;
+}
+
+/* ---------- 12. Search header ----------
+   Pencarian statis (tanpa server): daftar halaman + section populer,
+   disaring di browser oleh assets/js/jr-search.js. */
+.jr-search-wrap {
+  margin-left: 20px;
+}
+
+.jr-search {
+  position: relative;
+}
+
+.jr-search-form {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.jr-search-input {
+  width: 210px;
+  height: 42px;
+  box-sizing: border-box;
+  padding: 0 44px 0 16px;
+  border: 1px solid #e8e0d4;
+  border-radius: 999px;
+  background: #fff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: #2e2a26;
+}
+
+.jr-search-input::placeholder {
+  color: #7a7268;
+  opacity: 1;
+}
+
+.jr-search-input:focus {
+  outline: none;
+  border-color: #a64b2a;
+  box-shadow: 0 0 0 3px rgba(166, 75, 42, 0.16);
+}
+
+.jr-search-input:focus-visible {
+  outline: 2px solid #a64b2a;
+  outline-offset: 2px;
+}
+
+.jr-search-submit {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #a64b2a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.jr-search-submit:hover {
+  background: #7e3519;
+}
+
+.jr-search-submit:focus-visible {
+  outline: 2px solid #7e3519;
+  outline-offset: 2px;
+}
+
+.jr-search-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 1000;
+  width: 380px;
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #e8e0d4;
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(46, 42, 38, 0.18);
+}
+
+.jr-search-panel[hidden] {
+  display: none;
+}
+
+.jr-search-status {
+  margin: 0;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #6b645c;
+}
+
+.jr-search-status:empty {
+  display: none;
+}
+
+.jr-search-list {
+  max-height: 320px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.jr-search-list a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #2e2a26;
+  text-decoration: none;
+}
+
+.jr-search-list a:hover,
+.jr-search-list a.is-active {
+  background: #faf3ec;
+  color: #7e3519;
+}
+
+.jr-search-list a:focus-visible {
+  outline: 2px solid #a64b2a;
+  outline-offset: -2px;
+}
+
+.jr-search-item-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.jr-search-item-desc {
+  display: block;
+  margin-top: 2px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #6b645c;
+}
+
+@media (min-width: 922px) and (max-width: 1100px) {
+  .jr-search-wrap {
+    margin-left: 12px;
+  }
+
+  .jr-search-input {
+    width: 150px;
+  }
+}
+
+.jr-search-wrap-mobile {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 16px 20px 6px;
+  box-sizing: border-box;
+}
+
+.jr-search-wrap-mobile .jr-search,
+.jr-search-wrap-mobile .jr-search-form {
+  width: 100%;
+}
+
+.jr-search-wrap-mobile .jr-search-input {
+  width: 100%;
+}
+
+.jr-search-wrap-mobile .jr-search-panel {
+  position: static;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 8px;
+  box-shadow: none;
+}
+
+/* ---------- 13. Tentang Kami: blok "Kenapa memilih" sejajar konten ----------
+   Root alignfull Astra melebar 113px ke kiri-kanan dari kolom teks. */
+body.page-id-72 [data-spectra-id='128a2ebc'] {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+@media (min-width: 922px) {
+  body.page-id-72 [data-spectra-id='spectra-mjihmq3z-0847u6'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 48px !important;
+  }
+}
+/* ---------- 14. Halaman Layanan: konten selebar window ----------
+   Semula 1180px di tengah dengan gutter 133px; kini memakai lebar
+   window dengan gutter tetap 40px (lebih kecil di layar sempit). */
+body.page-id-74 .site-content > .ast-container {
+  width: auto !important;
+  max-width: none !important;
+  padding-left: 40px !important;
+  padding-right: 40px !important;
+}
+
+body.page-id-74 .entry-content > .wp-block-spectra-container {
+  width: auto !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+body.page-id-74
+  .entry-content
+  .wp-block-spectra-container.is-layout-constrained
+  > :where(:not(.alignleft):not(.alignright):not(.alignfull)),
+body.page-id-74
+  .entry-content
+  [class*='wp-container-spectra-container-is-layout-']
+  > :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+@media (max-width: 782px) {
+  body.page-id-74 .site-content > .ast-container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+@media (max-width: 544px) {
+  body.page-id-74 .site-content > .ast-container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
 }

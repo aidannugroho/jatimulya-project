@@ -113,7 +113,7 @@
   .jr-table tbody td { padding: 12px 10px; width: auto; }
 }
 .jr-compare-note {
-  margin: 18px 0 0 0;
+  margin: 18px auto 0;
   font-size: 16px;
   line-height: 1.65;
   color: #6b645c;
@@ -127,13 +127,14 @@
 
 /* ---------- Portofolio video ---------- */
 .jr-video {
-  margin: 28px 0 0 0;
+  margin: 28px auto 0;
   padding: 0;
+  max-width: 860px;
 }
 .jr-video video {
   display: block;
   width: 100%;
-  max-width: 860px;
+  max-width: 100%;
   height: auto;
   border-radius: 10px;
   border: 1px solid #e8e0d4;
@@ -144,15 +145,18 @@
   font-size: 15px;
   line-height: 1.65;
   color: #6b645c;
+  text-align: center;
 }
 
 /* ---------- Ulasan Google Maps ---------- */
 .jr-review-card {
-  margin-top: 26px;
+  max-width: 860px;
+  margin: 26px auto 0;
   background: #fff;
   border: 1px solid #e8e0d4;
   border-radius: 10px;
   padding: 34px;
+  text-align: center;
 }
 .jr-review-lead {
   font-family: 'Libre Baskerville', Georgia, serif;
@@ -162,14 +166,16 @@
   margin: 0 0 10px 0;
 }
 .jr-review-text {
+  max-width: 64ch;
+  margin: 0 auto 22px;
   font-size: 17px;
   line-height: 1.7;
   color: #5a544e;
-  margin: 0 0 22px 0;
 }
 .jr-review-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 12px;
 }
 .jr-btn-outline {
