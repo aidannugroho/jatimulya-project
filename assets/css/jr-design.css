@@ -460,8 +460,23 @@ body.page-id-74
   margin-right: 0 !important;
 }
 
+/* Baris 4 kartu diberi inset dari tepi kontainer induk supaya tidak
+   menempel ke sisi blok oranye; tetap simetris kiri-kanan. */
+body.page-id-74 .entry-content .jr-cards.jr-cards-2x2 {
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 40px !important;
+  padding-right: 40px !important;
+}
+
 @media (max-width: 782px) {
   body.page-id-74 .site-content > .ast-container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  body.page-id-74 .entry-content .jr-cards.jr-cards-2x2 {
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
