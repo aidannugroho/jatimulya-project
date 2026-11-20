@@ -1,78 +1,49 @@
-# Panduan Mengaktifkan Event GA4 via GTM `GTM-PJQH9WWD`
+# Panduan Event GA4 via GTM `GTM-MW44LLLB`
 
-Dokumen ini menjelaskan cara membuat trigger dan tag di Google Tag Manager agar 15 event yang sudah dikirim situs ke `window.dataLayer` benar-benar masuk ke GA4.
+Dokumen ini mencatat konfigurasi final GTM dan GA4 untuk 15 event interaksi yang dikirim situs ke `window.dataLayer`.
 
-## 1. Kondisi saat ini
+## 1. Kondisi final
 
-- Container GTM yang terpasang: **GTM-PJQH9WWD**.
-- Script GTM di halaman dibekukan oleh SureCookie sampai pengunjung menyetujui kategori **Analytics**. Jadi event baru masuk GA4 untuk pengunjung yang menerima cookie analytics. Ini sesuai desain consent saat ini.
-- `window.dataLayer` dibuat lebih awal, sehingga semua `dataLayer.push(...)` dari `assets/js/jr-fase-d.js` tetap antre dan dibaca begitu GTM aktif.
-- Event sudah terlihat di `dataLayer`, tetapi **belum otomatis menjadi event GA4** sampai tag dikonfigurasi dan container di-publish.
+- Container GTM yang terpasang: **`GTM-MW44LLLB`**. Container lama `GTM-PJQH9WWD` sudah tidak dipakai.
+- Versi live: **Version 3 – "GA4 + event tracking Jatimulya"** (2 tag, 1 trigger, 6 variabel).
+- `page_view` tetap dikirim oleh tag **Google Tag - GA4** yang sudah ada sejak Version 2. Tag GA4 Event tidak membuat `page_view` tambahan.
+- Script GTM dibekukan SureCookie sampai pengunjung menyetujui kategori **Analytics**. Event baru masuk GA4 hanya untuk pengunjung yang menerima cookie analytics.
+- `window.dataLayer` dibuat lebih awal, sehingga `dataLayer.push(...)` dari `assets/js/jr-fase-d.js` tetap antre dan dibaca begitu GTM aktif.
+- `G-08HP2WJY16` tidak disuntikkan langsung ke HTML; GA4 tetap dikonfigurasi dari dalam container GTM.
 
-## 2. Prasyarat
+## 2. Isi container GTM
 
-1. Akses edit + publish ke container **GTM-PJQH9WWD**.
-2. GA4 Measurement ID: **`G-08HP2WJY16`** (sudah diberikan; diambil dari GA4 → Admin → Data Streams → Web → Measurement ID).
-3. (Disarankan) akses ke GA4 → Admin → DebugView untuk verifikasi.
+### Tag
 
-## 3. Cek / buat tag Google Tag (GA4 configuration)
+| Nama | Tipe | Firing trigger | Catatan |
+| --- | --- | --- | --- |
+| `Google Tag - GA4` | Google Tag | Initialization – All Pages | Tag ID `G-08HP2WJY16`; sumber `page_view` |
+| `GA4 Event - JR Interaksi` | Google Analytics: GA4 Event | `JR - Custom Events` | Event name `{{Event}}`, Measurement ID `G-08HP2WJY16` |
 
-Di GTM: **Tags → New**
+### Trigger
 
-| Field | Nilai |
-| --- | --- |
-| Tag Type | **Google Tag** |
-| Tag ID | `G-08HP2WJY16` |
-| Triggering | **Initialization – All Pages** (atau `All Pages` jika opsi itu yang tersedia) |
-
-Simpan dengan nama misalnya `GA4 - Configuration`. Jika tag seperti ini sudah ada, cukup pastikan Tag ID-nya benar dan trigger-nya All Pages.
-
-## 4. Buat variabel Data Layer
-
-Di GTM: **Variables → New → Built-In → Data Layer Variable**. Buat 6 variabel ini:
-
-| Nama variabel | Data Layer Variable Name |
-| --- | --- |
-| `DLV - dp` | `dp` |
-| `DLV - tipe_unit` | `tipe_unit` |
-| `DLV - sumber` | `sumber` |
-| `DLV - link_location` | `link_location` |
-| `DLV - harga` | `harga` |
-| `DLV - persen` | `persen` |
-
-GTM sudah memiliki variabel bawaan **`{{Event}}**` yang berisi nama event yang sedang diproses. Tidak perlu dibuat manual.
-
-## 5. Buat satu trigger untuk ke-15 event
-
-Di GTM: **Triggers → New**
-
-| Field | Nilai |
-| --- | --- |
-| Trigger Type | **Custom Event** |
-| Nama | `JR - Semua Event Kustom` |
-| Pilih | **Some Custom Events** |
-| Condition | `Event name` **matches RegEx** |
-| Value | lihat baris di bawah |
+Nama: **`JR - Custom Events`**  
+Tipe: **Custom Event**  
+Centang **Use regex matching**.
 
 ```text
 ^(wa_klik|form_kirim|form_sukses|kpr_hitung|kpr_dp_pilih|kpr_wa_klik|unit_pilih|survei_jadwal|brosur_klik|peta_klik|peta_rute|peta_besar|telepon_klik|instagram_klik|scroll_kedalaman)$
 ```
 
-> Cara ini lebih ringkas daripada membuat 15 trigger terpisah. Jika kamu ingin pelacakan per event lebih terpisah, boleh membuat 15 trigger Custom Event dengan nama persis sesuai daftar atas, lalu memakai semuanya pada tag yang sama.
+### Variabel Data Layer
 
-## 6. Buat satu tag GA4 Event
+| Nama variabel | Data Layer Variable Name | Version |
+| --- | --- | --- |
+| `DLV - dp` | `dp` | 2 |
+| `DLV - tipe_unit` | `tipe_unit` | 2 |
+| `DLV - sumber` | `sumber` | 2 |
+| `DLV - link_location` | `link_location` | 2 |
+| `DLV - harga` | `harga` | 2 |
+| `DLV - persen` | `persen` | 2 |
 
-Di GTM: **Tags → New**
+Variabel bawaan `{{Event}}` dipakai sebagai Event name dan tidak perlu dibuat manual.
 
-| Field | Nilai |
-| --- | --- |
-| Tag Type | **Google Analytics: GA4 Event** |
-| Nama tag | `JR - GA4 Event (semua event)` |
-| Configuration Tag | pilih tag `GA4 - Configuration` dari langkah 3 |
-| Event name | `{{Event}}` |
-| Triggering | `JR - Semua Event Kustom` |
-
-Tambahkan **Event Parameters** berikut (masing-masing centang "Send in GA4" jika tersedia):
+### Event Parameters pada tag GA4 Event
 
 | Parameter name | Value |
 | --- | --- |
@@ -83,11 +54,22 @@ Tambahkan **Event Parameters** berikut (masing-masing centang "Send in GA4" jika
 | `harga` | `{{DLV - harga}}` |
 | `persen` | `{{DLV - persen}}` |
 
-Parameter yang tidak dikirim oleh suatu event akan otomatis kosong/terlewat; itu normal.
+Parameter yang tidak dikirim oleh suatu event akan kosong/terlewat; itu normal.
 
-Simpan tag, lalu **Submit → Publish** dengan nama versi misalnya `Jatimulya - GA4 custom events`.
+## 3. Custom dimension GA4
 
-## 7. Daftar event dan parameter yang dikirim situs
+Di GA4 → **Admin → Custom definitions → Custom dimensions**, sudah dibuat 6 custom dimension dengan scope **Event**:
+
+- `dp`
+- `tipe_unit`
+- `sumber`
+- `link_location`
+- `harga`
+- `persen`
+
+Nama dimension sama persis dengan nama parameter di GTM agar bisa dipakai di report/exploration.
+
+## 4. Daftar event dan parameter yang dikirim situs
 
 | Event | Parameter yang dikirim | Pemicu di situs |
 | --- | --- | --- |
@@ -109,33 +91,30 @@ Simpan tag, lalu **Submit → Publish** dengan nama versi misalnya `Jatimulya - 
 
 `link_location` berisi id section terdekat, misalnya `jr-unit-picker`, `jr-kontak-grid`, atau judul halaman sebagai fallback.
 
-## 8. Verifikasi
+## 5. Verifikasi produksi
 
-1. Di GTM klik **Preview**, masukkan `https://jatimulya-project.pages.dev`, lalu pilih halaman yang terbuka di Tag Assistant.
-2. Terima cookie kategori **Analytics** di banner SureCookie (jika belum), karena GTM baru jalan setelah consent.
-3. Klik salah satu tombol WhatsApp, lalu di panel Preview cek:
-   - event `wa_klik` muncul,
-   - tag `JR - GA4 Event (semua event)` **Fired**,
-   - Event name = `wa_klik`, parameter `link_location` terisi.
-4. Buka GA4 → **Admin → DebugView** saat Preview masih aktif; event yang sama harus muncul dengan parameter.
-5. Setelah publish, cek GA4 → **Realtime** sambil melakukan klik di situs produksi.
+1. Pastikan deploy Cloudflare Pages berstatus `success` untuk commit terbaru.
+2. Buka `https://jatimulya-project.pages.dev`, terima kategori **Analytics** di banner SureCookie.
+3. Di Network tab, pastikan `gtm.js?id=GTM-MW44LLLB` dimuat.
+4. Pastikan request `collect` tetap ada untuk `en=page_view`.
+5. Klik salah satu tombol WhatsApp, lalu cek request `collect` dengan `en=wa_klik` dan parameter `link_location`.
+6. Cek GA4 → **Realtime** atau **DebugView**; event yang sama harus muncul beserta parameternya.
+7. Setelah selesai uji, kembalikan consent Analytics menjadi **declined**.
 
-Catatan: GTM Preview biasanya meneruskan event ke DebugView. Jika tidak muncul, tambahkan sementara parameter `debug_mode` dengan nilai `true` pada tag hanya untuk pengujian, lalu hapus sebelum publish akhir.
-
-## 9. Troubleshooting
+## 6. Troubleshooting
 
 | Gejala | Penyebab likely | Perbaikan |
 | --- | --- | --- |
-| Event ada di `dataLayer`, tapi tidak ada tag yang fire di Preview | Trigger regex salah / belum publish | Pastikan regex persis seperti langkah 5, lalu publish ulang |
-| Tag fire, tapi GA4 Realtime kosong | Measurement ID salah atau GTM belum publish | Cek Tag ID di langkah 3 dan status publish |
-| Tidak ada event sama sekali di Preview | Cookie Analytics belum disetujui (SureCookie membekukan GTM) | Terima kategori Analytics atau uji di mode Preview setelah consent |
-| Parameter kosong di GA4 | Nama Data Layer Variable salah | Samakan persis dengan tabel langkah 4 |
-| Event dulunya ada, sekarang hilang | Ad blocker / browser privacy setting | Uji di profil browser bersih atau nonaktifkan blocker untuk pengujian |
+| Event ada di `dataLayer`, tapi tidak ada tag yang fire di Preview | Trigger regex salah / belum publish | Pastikan regex persis seperti bagian 2, lalu publish ulang |
+| Tag fire, tapi GA4 Realtime kosong | Measurement ID salah atau GTM belum publish | Cek Measurement ID di tag GA4 Event dan status publish |
+| Tidak ada event sama sekali di Preview | Cookie Analytics belum disetujui (SureCookie membekukan GTM) | Terima kategori Analytics atau uji di Preview setelah consent |
+| Parameter kosong di GA4 | Nama Data Layer Variable salah | Samakan persis dengan tabel variabel |
+| `page_view` doble | Tag GA4 Event disalahartikan sebagai tag konfigurasi | Biarkan hanya `Google Tag - GA4` yang fire di Initialization/All Pages |
 
-## 10. Setelah selesai
+## 7. Catatan rilis
 
-Catat di sini versi GTM yang sudah di-publish dan tanggal verifikasi:
-
-- Versi GTM: __________
-- Tanggal verifikasi DebugView: __________
+- Container: `GTM-MW44LLLB`
+- Versi live: `3`
+- Nama versi: `GA4 + event tracking Jatimulya`
 - Measurement ID GA4: `G-08HP2WJY16`
+- Tanggal publish: `2026-11-20`
