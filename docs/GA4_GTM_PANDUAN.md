@@ -12,7 +12,7 @@ Dokumen ini menjelaskan cara membuat trigger dan tag di Google Tag Manager agar 
 ## 2. Prasyarat
 
 1. Akses edit + publish ke container **GTM-PJQH9WWD**.
-2. GA4 Measurement ID berbentuk `G-XXXXXXXXXX` (ambil dari GA4 → Admin → Data Streams → Web → Measurement ID).
+2. GA4 Measurement ID: **`G-08HP2WJY16`** (sudah diberikan; diambil dari GA4 → Admin → Data Streams → Web → Measurement ID).
 3. (Disarankan) akses ke GA4 → Admin → DebugView untuk verifikasi.
 
 ## 3. Cek / buat tag Google Tag (GA4 configuration)
@@ -22,7 +22,7 @@ Di GTM: **Tags → New**
 | Field | Nilai |
 | --- | --- |
 | Tag Type | **Google Tag** |
-| Tag ID | `G-XXXXXXXXXX` (Measurement ID-mu) |
+| Tag ID | `G-08HP2WJY16` |
 | Triggering | **Initialization – All Pages** (atau `All Pages` jika opsi itu yang tersedia) |
 
 Simpan dengan nama misalnya `GA4 - Configuration`. Jika tag seperti ini sudah ada, cukup pastikan Tag ID-nya benar dan trigger-nya All Pages.
@@ -138,4 +138,4 @@ Catat di sini versi GTM yang sudah di-publish dan tanggal verifikasi:
 
 - Versi GTM: __________
 - Tanggal verifikasi DebugView: __________
-- Measurement ID GA4: `G-__________`
+- Measurement ID GA4: `G-08HP2WJY16`
