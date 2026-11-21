@@ -140,3 +140,18 @@ Perubahan ini tidak mengubah container GTM, trigger, variabel, maupun parameter 
 Tombol footer memakai atribut bawaan SureCookie `data-surecookie-reconsent`, sehingga tidak ada JavaScript kustom yang ditambahkan. Terjemahan modal disuntik lewat `wp.i18n.setLocaleData(..., 'surecookie')` sebelum `public.js` berjalan.
 
 **Perbandingan data:** angka `page_view`, `wa_klik`, dan event lain akan naik mulai tanggal migrasi karena traffic yang sebelumnya hilang kini masuk sebagai cookieless ping. Gunakan filter tanggal saat membandingkan dengan periode sebelum `2026-11-21`.
+
+## 9. Integrasi Search Console — 2026-11-21
+
+- Properti GSC `https://jatimulya-project.pages.dev/` sudah diverifikasi dengan meta tag `google-site-verification`.
+- Meta tag terpasang di `index.html`, `kontak/index.html`, `layanan/index.html`, dan `tentang-kami/index.html`.
+- Link **GA4 ↔ Search Console** sudah dibuat:
+  - Property GA4: `a416061740p564000201`
+  - Web stream: `Proyek Jatimulya`, Stream ID `16327734224`
+  - Situs: `https://jatimulya-project.pages.dev/`
+  - Prefix URL: `https://jatimulya-project.pages.dev/`
+  - Pembuat: `Aidanrn06@gmail.com`
+  - Tanggal: `2026-11-21`
+- `form_sukses` sudah ditandai sebagai **Key event** utama di GA4.
+- Data source Looker Studio dan struktur dashboard ada di `docs/LOOKER_STUDIO_PANDUAN.md`.
+- Dashboard memfilter `Host name` exactly `jatimulya-project.pages.dev` agar data uji preview domain tidak ikut dihitung.
