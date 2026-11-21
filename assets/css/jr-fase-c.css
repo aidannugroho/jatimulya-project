@@ -178,6 +178,30 @@
   justify-content: center;
   gap: 12px;
 }
+.jr-quote-list {
+  display: grid;
+  gap: 20px;
+  max-width: 860px;
+  margin: 26px auto 0;
+  text-align: left;
+}
+.jr-quote {
+  margin: 0;
+  padding-top: 20px;
+  border-top: 1px solid #e8e0d4;
+}
+.jr-quote p {
+  margin: 0 0 8px;
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #2e2a26;
+}
+.jr-quote footer {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #6b645c;
+}
 .jr-btn-outline {
   display: inline-block;
   border: 1px solid #a64b2a;
@@ -197,6 +221,8 @@
   .jr-review-actions { flex-direction: column; }
   .jr-review-actions .jr-btn-solid,
   .jr-review-actions .jr-btn-outline { text-align: center; }
+  .jr-quote-list { gap: 18px; }
+  .jr-quote p { font-size: 16px; }
 }
 
 /* ---------- FAQ accordion ---------- */
