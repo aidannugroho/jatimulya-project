@@ -7,7 +7,8 @@ Dokumen ini mencatat konfigurasi final GTM dan GA4 untuk 15 event interaksi yang
 - Container GTM yang terpasang: **`GTM-MW44LLLB`**. Container lama `GTM-PJQH9WWD` sudah tidak dipakai.
 - Versi live: **Version 3 – "GA4 + event tracking Jatimulya"** (2 tag, 1 trigger, 6 variabel).
 - `page_view` tetap dikirim oleh tag **Google Tag - GA4** yang sudah ada sejak Version 2. Tag GA4 Event tidak membuat `page_view` tambahan.
-- Script GTM dibekukan SureCookie sampai pengunjung menyetujui kategori **Analytics**. Event baru masuk GA4 hanya untuk pengunjung yang menerima cookie analytics.
+- Mulai `2026-11-21`, GTM dimuat langsung dengan `async` dan **tidak lagi dibekukan** SureCookie. Sebelum ada keputusan, `analytics_storage: 'denied'` sehingga GA4 mengirim cookieless ping; setelah pengunjung menyetujui Analytics, `consent update` mengubah status menjadi `granted` dan cookie `_ga` dibuat.
+- SureCookie tetap menampilkan banner, kategori **Functional** ditandai *Always Active*, dan tersedia tombol **Ubah Preferensi Cookie** di footer.
 - `window.dataLayer` dibuat lebih awal, sehingga `dataLayer.push(...)` dari `assets/js/jr-fase-d.js` tetap antre dan dibaca begitu GTM aktif.
 - `G-08HP2WJY16` tidak disuntikkan langsung ke HTML; GA4 tetap dikonfigurasi dari dalam container GTM.
 
@@ -94,12 +95,12 @@ Nama dimension sama persis dengan nama parameter di GTM agar bisa dipakai di rep
 ## 5. Verifikasi produksi
 
 1. Pastikan deploy Cloudflare Pages berstatus `success` untuk commit terbaru.
-2. Buka `https://jatimulya-project.pages.dev`, terima kategori **Analytics** di banner SureCookie.
-3. Di Network tab, pastikan `gtm.js?id=GTM-MW44LLLB` dimuat.
+2. Buka `https://jatimulya-project.pages.dev` dengan incognito. Di console, pastikan `dataLayer` berisi `consent default` dengan `analytics_storage: 'denied'` dan `functionality_storage: 'granted'`.
+3. Di Network tab, pastikan `gtm.js?id=GTM-MW44LLLB` dimuat **sebelum** pengunjung memilih di banner.
 4. Pastikan request `collect` tetap ada untuk `en=page_view`.
 5. Klik salah satu tombol WhatsApp, lalu cek request `collect` dengan `en=wa_klik` dan parameter `link_location`.
 6. Cek GA4 → **Realtime** atau **DebugView**; event yang sama harus muncul beserta parameternya.
-7. Setelah selesai uji, kembalikan consent Analytics menjadi **declined**.
+7. Klik tombol **Ubah Preferensi Cookie** di footer; modal harus terbuka dalam bahasa Indonesia dan status dapat diubah. Setelah selesai uji, kembalikan consent Analytics menjadi **declined**.
 
 ## 6. Troubleshooting
 
@@ -107,7 +108,7 @@ Nama dimension sama persis dengan nama parameter di GTM agar bisa dipakai di rep
 | --- | --- | --- |
 | Event ada di `dataLayer`, tapi tidak ada tag yang fire di Preview | Trigger regex salah / belum publish | Pastikan regex persis seperti bagian 2, lalu publish ulang |
 | Tag fire, tapi GA4 Realtime kosong | Measurement ID salah atau GTM belum publish | Cek Measurement ID di tag GA4 Event dan status publish |
-| Tidak ada event sama sekali di Preview | Cookie Analytics belum disetujui (SureCookie membekukan GTM) | Terima kategori Analytics atau uji di Preview setelah consent |
+| Tidak ada event sama sekali di Preview | `gtm.js` gagal dimuat atau GTM belum publish | Cek Network untuk `gtm.js?id=GTM-MW44LLLB`, lalu publish ulang container |
 | Parameter kosong di GA4 | Nama Data Layer Variable salah | Samakan persis dengan tabel variabel |
 | `page_view` doble | Tag GA4 Event disalahartikan sebagai tag konfigurasi | Biarkan hanya `Google Tag - GA4` yang fire di Initialization/All Pages |
 
@@ -118,3 +119,24 @@ Nama dimension sama persis dengan nama parameter di GTM agar bisa dipakai di rep
 - Nama versi: `GA4 + event tracking Jatimulya`
 - Measurement ID GA4: `G-08HP2WJY16`
 - Tanggal publish: `2026-11-20`
+
+## 8. Migrasi Consent Mode — 2026-11-21
+
+Perubahan ini tidak mengubah container GTM, trigger, variabel, maupun parameter event. Yang berubah hanya cara GTM dimuat dan sinyal consent yang dikirim ke GA4.
+
+| Aspek | Sebelum | Sesudah |
+| --- | --- | --- |
+| Snippet GTM | `type="text/plain"` + `data-surecookie-category` | `<script async src="...GTM-MW44LLLB">` |
+| `consent default` | Tidak ada | `analytics_storage: 'denied'`, `functionality_storage: 'granted'`, `wait_for_update: 500` |
+| `gcm_enabled` | `""` | `"1"` |
+| `functional.required` | `false` | `true` (Always Active) |
+| `analytics.required` | `false` | `false` (tetap bisa ditolak) |
+| Sebelum pilih | GTM tidak jalan | GTM jalan, cookieless ping |
+| Reject All | GTM mati | GTM jalan, tetap `denied` |
+| Accept All | GTM baru jalan | Status berubah `granted`, `_ga` dibuat |
+| Teks banner/modal | Bahasa Inggris | Bahasa Indonesia |
+| Tombol footer | Tidak ada | **Ubah Preferensi Cookie** |
+
+Tombol footer memakai atribut bawaan SureCookie `data-surecookie-reconsent`, sehingga tidak ada JavaScript kustom yang ditambahkan. Terjemahan modal disuntik lewat `wp.i18n.setLocaleData(..., 'surecookie')` sebelum `public.js` berjalan.
+
+**Perbandingan data:** angka `page_view`, `wa_klik`, dan event lain akan naik mulai tanggal migrasi karena traffic yang sebelumnya hilang kini masuk sebagai cookieless ping. Gunakan filter tanggal saat membandingkan dengan periode sebelum `2026-11-21`.
