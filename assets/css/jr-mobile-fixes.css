@@ -1,0 +1,146 @@
+/* ============================================================
+   Jatimulya Residence — perbaikan tampilan mobile phone.
+   File ini hanya dimuat pada layar <= 782px lewat atribut media
+   di tag <link>. Tidak ada aturan untuk desktop.
+   ============================================================ */
+
+@media (max-width: 782px) {
+  /* ---------- Tipografi mobile ---------- */
+  body {
+    font-size: 15px !important;
+    line-height: 1.65 !important;
+  }
+
+  .jr-lead,
+  .jr-galeri-caption,
+  .jr-note,
+  .jr-compare-note,
+  .jr-unit-note,
+  .jr-faq-body,
+  .jr-step-card p,
+  .jr-card p,
+  .jr-form-status {
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+  }
+
+  .entry-content p[data-spectra-id='spectra-desc-6b316809'] {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  .jr-form-group input,
+  .jr-form-group select,
+  .jr-form-group textarea,
+  .jr-survei-form select,
+  .jr-survei-form input {
+    font-size: 15px !important;
+  }
+
+  /* ---------- Hero home: gambar kanan mengikuti tinggi baris ---------- */
+  body.page-id-69 .wp-container-core-group-is-layout-17130343 {
+    align-items: stretch !important;
+  }
+
+  body.page-id-69 .wp-container-core-group-is-layout-17130343 > .wp-block-cover:last-child {
+    aspect-ratio: auto !important;
+    height: 100% !important;
+    min-height: 100% !important;
+  }
+
+  body.page-id-69 .wp-container-core-group-is-layout-17130343 .wp-block-cover__image-background {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  /* ---------- Galeri: 2 kolom simetris, semua item memenuhi cell ---------- */
+  body.page-id-72 .wp-container-spectra-container-is-layout-987cefe3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    align-items: stretch !important;
+    width: 100% !important;
+  }
+
+  body.page-id-72 .wp-container-spectra-container-is-layout-987cefe3 > * {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  body.page-id-72 .wp-container-spectra-container-is-layout-987cefe3 > figure,
+  body.page-id-72 .wp-container-spectra-container-is-layout-987cefe3 > .wp-block-cover {
+    position: relative !important;
+    aspect-ratio: 4 / 5 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    border-radius: 6px;
+  }
+
+  body.page-id-72 .wp-container-spectra-container-is-layout-987cefe3 video,
+  body.page-id-72 .wp-container-spectra-container-is-layout-987cefe3 img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    object-fit: cover !important;
+  }
+
+  body.page-id-72 .wp-container-spectra-container-is-layout-987cefe3 .wp-block-cover__image-background {
+    position: absolute !important;
+    inset: 0 !important;
+  }
+
+  /* ---------- Gambar kontak: rasio asli, tidak terpotong ---------- */
+  body.page-id-76 .entry-content figure.wp-block-image.alignright {
+    float: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 24px !important;
+  }
+
+  body.page-id-76 .entry-content figure.wp-block-image.alignright img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    aspect-ratio: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* ---------- Sticky CTA: satu tombol ringkas ----------
+     Tombol WhatsApp bulat dari plugin JoinChat tetap dipertahankan. */
+  .jr-sticky-cta {
+    justify-content: center !important;
+    padding: 6px 12px !important;
+  }
+
+  .jr-sticky-item.form {
+    flex: 0 1 auto !important;
+    min-height: 36px !important;
+    padding: 6px 16px !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+    border-radius: 999px !important;
+  }
+
+  /* ---------- Tombol aksi form lebih ringkas ---------- */
+  .jr-form-actions {
+    gap: 8px !important;
+  }
+
+  .jr-btn-prev,
+  .jr-btn-next,
+  .jr-btn-submit,
+  .jr-btn-wa,
+  .jr-btn-unit,
+  .jr-btn.wa {
+    font-size: 14px !important;
+    padding: 10px 16px !important;
+  }
+}

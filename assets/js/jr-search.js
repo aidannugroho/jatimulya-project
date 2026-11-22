@@ -15,7 +15,7 @@
     },
     {
       t: "Tipe A & Tipe B",
-      d: "LT 60/LB 58 dan LT 75/LB 72, 2 kamar tidur, 2 kamar mandi.",
+      d: "LT 60/LB 58 (2 kamar tidur) dan LT 75/LB 72 (3 kamar tidur: 2 atas, 1 bawah), 2 kamar mandi.",
       u: "/#tipe-unit",
       k: "tipe a tipe b unit denah lt lb lantai kamar tidur kamar mandi 60 58 75 72",
     },

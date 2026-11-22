@@ -148,7 +148,7 @@
   document.querySelectorAll(".jr-btn-unit").forEach(function (b) {
     b.addEventListener("click", function () {
       var unit = b.dataset.unit;
-      var spec = unit === "A" ? "LT 60 m² / LB 58 m², 2KT 2KM" : "LT 75 m² / LB 72 m², 2KT 2KM";
+      var spec = unit === "A" ? "LT 60 m² / LB 58 m², 2KT 2KM" : "LT 75 m² / LB 72 m², 3KT (2 atas, 1 bawah), 2KM";
       var txt =
         "Halo min, saya tertarik Jatimulya Residence Tipe " +
         unit +
