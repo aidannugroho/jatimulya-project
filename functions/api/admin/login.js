@@ -25,15 +25,7 @@ export async function onRequestPost({ request, env }) {
   const valid = await verifyPassword(password, env.ADMIN_PASSWORD_HASH);
   if (!valid) {
     await noteFailedLogin(env, request, rate);
-    const raw = String(env.ADMIN_PASSWORD_HASH || "");
-    return json(
-      {
-        ok: false,
-        error: "Kata sandi salah",
-        debug: { hasHash: Boolean(raw), length: raw.length, prefix: raw.slice(0, 12) },
-      },
-      401
-    );
+    return json({ ok: false, error: "Kata sandi salah" }, 401);
   }
 
   await clearFailedLogin(env, request);
