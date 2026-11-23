@@ -556,13 +556,15 @@ body.page-id-74
 }
 
 /* Baris 4 kartu diberi inset dari tepi kontainer induk supaya tidak
-   menempel ke sisi blok oranye; tetap simetris kiri-kanan. */
+   menempel ke sisi blok oranye; tetap simetris kiri-kanan.
+   Inset mengikuti lebar layar: 20px di ponsel, maksimal 60px di desktop. */
 body.page-id-74 .entry-content .jr-cards.jr-cards-2x2 {
+  box-sizing: border-box !important;
   width: 100% !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+  padding-left: clamp(20px, 4vw, 60px) !important;
+  padding-right: clamp(20px, 4vw, 60px) !important;
 }
 
 /* Tombol reconsent SureCookie di footer. */
