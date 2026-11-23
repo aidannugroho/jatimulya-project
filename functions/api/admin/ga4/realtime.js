@@ -14,9 +14,25 @@ export async function onRequestPost(context) {
   }
 
   try {
+    // Realtime API memakai schema berbeda dari Data API: `pagePath`/`hostName` tidak valid.
+    const validDimensions = new Set([
+      "unifiedScreenName", "eventName", "country", "browser", "deviceCategory", "dateHourMinute",
+    ]);
+    let dimensions = (options.dimensions || ["unifiedScreenName"])
+      .map((name) => (name === "pagePath" ? "unifiedScreenName" : name))
+      .filter((name) => validDimensions.has(name));
+    let metrics = (options.metrics || ["activeUsers", "screenPageViews"])
+      .filter((name) => ["activeUsers", "screenPageViews", "eventCount"].includes(name));
+    if (!metrics.length) metrics = ["activeUsers", "screenPageViews"];
+    if (metrics.includes("activeUsers") || metrics.includes("screenPageViews")) {
+      dimensions = dimensions.filter((name) => name !== "eventName");
+    }
+    if (!dimensions.length) dimensions = ["unifiedScreenName"];
+    if (dimensions.includes("eventName") && !metrics.includes("eventCount")) metrics = ["eventCount"];
+
     const report = await runRealtimeReport(env, {
-      dimensions: options.dimensions || ["pagePath", "eventName"],
-      metrics: options.metrics || ["activeUsers", "screenPageViews"],
+      dimensions,
+      metrics,
       // Laporan realtime sudah di-scope ke property GA4 (satu stream untuk host produksi).
       // hostName bukan dimensi realtime yang valid, jadi filter ini dilewati di sini.
       dimensionFilters: (options.dimensionFilters || []).filter(
@@ -24,7 +40,7 @@ export async function onRequestPost(context) {
       ),
       limit: options.limit || 50,
     });
-    return json({ ok: true, rows: flattenReport(report) });
+    return json({ ok: true, rows: flattenReport(report), dimensions, metrics });
   } catch (error) {
     return json(
       {

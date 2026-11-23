@@ -315,9 +315,9 @@
           method: "POST",
           headers: { "content-type": "application/json", "accept": "application/json" },
           body: JSON.stringify({
-            dimensions: ["pagePath", "eventName"],
+            // Realtime API tidak menerima pagePath/hostName; pakai unifiedScreenName.
+            dimensions: ["unifiedScreenName"],
             metrics: ["activeUsers", "screenPageViews"],
-            dimensionFilters: [{ dimensionName: "hostName", operator: "EQUAL", value: HOST_FILTER }],
             limit: 50,
           }),
         });
