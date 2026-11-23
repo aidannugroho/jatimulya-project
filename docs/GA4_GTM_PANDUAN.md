@@ -175,7 +175,8 @@ Tombol footer memakai atribut bawaan SureCookie `data-surecookie-reconsent`, seh
 
 ## 11. Panel admin dan GA4 Data API — 2026-11-23
 
-- Panel internal tersedia di `/admin/` dan dilindungi kata sandi yang disimpan sebagai Pages secret `ADMIN_PASSWORD_HASH` (PBKDF2-SHA256, 100.000 iterasi). Nilai password tidak tersimpan di repo maupun dokumentasi.
+- Panel internal tersedia di `/admin/` dan dilindungi kata sandi yang disimpan sebagai Pages secret `ADMIN_PASSWORD_HASH` (PBKDF2-SHA256, 100.000 iterasi). Nilai password tidak tersimpan di repo maupun dokumentasi; hash-nya juga sudah bertype `secret_text` (tidak bisa dibaca lewat dashboard/API).
+- Session admin memakai token acak 256-bit yang disimpan di KV dan ditandatangani HMAC-SHA256 dengan Pages secret `ADMIN_SESSION_SECRET`. Cookie berisi `token.tanda_tangan`; tanda tangan diverifikasi sebelum lookup KV, sehingga cookie yang dimodifikasi ditolak. Perubahan ini menggantikan token tanpa tanda tangan, jadi session lama harus login ulang. Pencabutan tetap dilakukan dengan menghapus key KV saat logout.
 - Endpoint `/api/admin/ga4`, `/api/admin/ga4/realtime`, dan `/api/admin/ga4/metadata` memanggil Google Analytics Data API v1beta lewat service account.
 - Service account dibaca dari Pages secret `GA4_SERVICE_ACCOUNT_JSON`; email service account harus diberi peran **Viewer** pada property GA4 `a416061740p564000201`.
 - Google Analytics Data API memakai **ID numerik** `564000201` (env `GA4_PROPERTY_ID`), bukan hash URL Admin `a416061740p564000201`. Hash tersebut tetap dipakai di URL dashboard GA4 dan Looker Studio.
