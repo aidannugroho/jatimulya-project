@@ -538,3 +538,7 @@ body.page-id-74 .entry-content .jr-cards.jr-cards-2x2 {
     margin: 0;
   }
 }
+
+/* Header halaman kontak setelah reorder section. */
+.jr-kontak-head { padding-top: 48px; }
+.jr-kontak-head h1 { margin: 0 0 24px 0; }

@@ -155,3 +155,32 @@ Tombol footer memakai atribut bawaan SureCookie `data-surecookie-reconsent`, seh
 - `form_sukses` sudah ditandai sebagai **Key event** utama di GA4.
 - Data source Looker Studio dan struktur dashboard ada di `docs/LOOKER_STUDIO_PANDUAN.md`.
 - Dashboard memfilter `Host name` exactly `jatimulya-project.pages.dev` agar data uji preview domain tidak ikut dihitung.
+
+## 10. Halaman `/pilih-rumah-anda/` — 2026-11-23
+
+- Halaman baru memakai snippet GTM yang sama persis dengan halaman lain. Tidak ada tag GA4 tambahan, tidak ada `gtag('config', ...)` manual, dan `G-08HP2WJY16` tidak disuntikkan langsung ke HTML.
+- Tag **Google Tag - GA4** tetap menjadi satu-satunya sumber `page_view`. Karena trigger-nya **Initialization – All Pages**, halaman baru otomatis ikut terukur tanpa perubahan GTM (Version 3 tetap live).
+- Nilai yang diharapkan di `dataLayer` setelah halaman dimuat:
+
+  | Field | Nilai |
+  | --- | --- |
+  | `event` | `page_view` (tepat satu kali) |
+  | `page_location` | `https://jatimulya-project.pages.dev/pilih-rumah-anda/` |
+  | `page_path` | `/pilih-rumah-anda/` |
+  | `page_title` | `Pilih Rumah Anda — Kalkulator DP, Tipe Rumah &amp; Survei \\| Jatimulya Residence` |
+  | `host_name` | `jatimulya-project.pages.dev` |
+
+- Cara verifikasi cepat: buka URL produksi, jalankan `dataLayer.filter(x => x.event === 'page_view')`, pastikan panjangnya `1`, lalu cek request `collect` dengan `en=page_view` dan status `204`, dan terakhir cek GA4 → Realtime pada halaman `/pilih-rumah-anda/`.
+- `net::ERR_ABORTED` yang kadang muncul di panel Network CDP untuk request `collect` bukan error; status respons tetap `204` dan event masuk ke GA4.
+
+## 11. Panel admin dan GA4 Data API — 2026-11-23
+
+- Panel internal tersedia di `/admin/` dan dilindungi kata sandi yang disimpan sebagai Pages secret `ADMIN_PASSWORD_HASH` (PBKDF2-SHA256, 100.000 iterasi). Nilai password tidak tersimpan di repo maupun dokumentasi.
+- Endpoint `/api/admin/ga4`, `/api/admin/ga4/realtime`, dan `/api/admin/ga4/metadata` memanggil Google Analytics Data API v1beta lewat service account.
+- Service account dibaca dari Pages secret `GA4_SERVICE_ACCOUNT_JSON`; email service account harus diberi peran **Viewer** pada property GA4 `a416061740p564000201`.
+- Setiap laporan admin memakai filter `Host name = jatimulya-project.pages.dev` secara bawaan (kecuali Realtime, yang sudah di-scope ke property).
+- Karena Data API tidak menyediakan `engagement rate` dan `key event rate` sebagai metrik siap pakai di UI, layer server menghitung keduanya:
+  - `jr_engagement_rate = engagedSessions / sessions`
+  - `jr_key_event_rate = keyEvents / totalUsers`
+  - `jr_value = totalUsers` pada mode **User Unik**, atau `screenPageViews` pada mode **Event**
+- Layer kompensasi ini bukan pengganti GA4; GA4 tetap source of truth.

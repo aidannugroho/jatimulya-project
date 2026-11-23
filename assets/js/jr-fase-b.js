@@ -1,12 +1,12 @@
 /* ============================================================
    Jatimulya Residence — Fase B: Konversi (JS)
-   Form 2 langkah (Formspree), kalkulator DP, pemilih tipe,
+   Form 2 langkah (proxy /api/leads), kalkulator DP, pemilih tipe,
    jadwal survei, sticky CTA mobile.
    ============================================================ */
 (function () {
   "use strict";
 
-  var FORM_ENDPOINT = "https://formspree.io/f/mvkareqn";
+  var FORM_ENDPOINT = "/api/leads";
   var WA_NUMBER = "6278777502532";
 
   /* ---------- 2-step contact form ---------- */

@@ -25,3 +25,19 @@ Disimpan dari laporan eksekusi optimalisasi Google Search Console, 22 November 2
 ## Konten
 
 - [ ] Ulasan asli Jatimulya Residence belum tersedia. Slot testimoni saat ini memakai ulasan Grand Wisma Residence yang sudah diberi label sebagai proyek sebelumnya. Jangan mengarang testimoni.
+
+## Selesai pada 23 November 2026
+
+- [x] Halaman baru `/pilih-rumah-anda/` berisi `#jr-kalkulator`, `#jr-unit-picker`, dan `#jr-survei`; menu dan Tautan Cepat diperbarui di semua halaman utama.
+- [x] Urutan halaman Kontak: Detail Kontak → Konsultasi Gratis → Diskusikan Rumah Impianmu + gambar. Paragraf deskripsi lama diarsipkan di `docs/arsip/kontak-deskripsi-lama.txt`.
+- [x] Sitemap, robots, dan indeks pencarian diperbarui untuk halaman baru.
+- [x] Backend admin `/admin/` + Pages Functions (`/api/leads`, `/api/admin/*`) dengan D1 `JR_LEADS_DB` dan KV `JR_ADMIN_KV`.
+- [x] Form kontak kini mengirim ke `/api/leads`, menyimpan arsip lead ke D1, lalu meneruskan notifikasi ke Formspree.
+- [x] Secret `ADMIN_PASSWORD_HASH` dan `ADMIN_SESSION_SECRET` disimpan sebagai Pages secret; nilai tidak pernah ditulis ke repo.
+
+## Masih perlu tindak lanjut
+
+- [ ] Pasang secret `GA4_SERVICE_ACCOUNT_JSON` setelah service account dibuat dan diberi akses **Viewer** pada property GA4.
+- [ ] Isi data asli ke worksheet `leads`, `biaya`, `target` dan hapus semua baris `CONTOH - hapus`.
+- [ ] Tambahkan URL `https://jatimulya-project.pages.dev/pilih-rumah-anda/` ke antrean Request Indexing GSC setelah kuota harian tersedia.
+- [ ] Verifikasi `page_view` halaman baru di GA4 Realtime setelah deploy produksi.

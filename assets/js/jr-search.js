@@ -26,10 +26,28 @@
       k: "harga biaya rupiah juta 700 800 900 budget murah",
     },
     {
+      t: "Pilih Rumah Anda",
+      d: "Halaman simulasi DP, perbandingan tipe rumah, dan jadwal survei.",
+      u: "/pilih-rumah-anda/",
+      k: "pilih rumah anda kalkulator dp cicilan tipe unit survei lokasi",
+    },
+    {
       t: "Simulasi DP & cicilan",
       d: "Kalkulator DP dan cicilan KPR dengan tenor 12 bulan.",
-      u: "/#jr-kalkulator",
+      u: "/pilih-rumah-anda/#jr-kalkulator",
       k: "simulasi dp cicilan kalkulator kpr tenor 12 bulan hitung angsuran",
+    },
+    {
+      t: "Bandingkan Tipe A & Tipe B",
+      d: "Pilih tipe unit langsung dari halaman Pilih Rumah Anda.",
+      u: "/pilih-rumah-anda/#jr-unit-picker",
+      k: "unit picker pilih tipe a tipe b bandingkan denah kamar",
+    },
+    {
+      t: "Jadwalkan survei lokasi",
+      d: "Kirim jadwal survei ke tim pemasaran lewat WhatsApp.",
+      u: "/pilih-rumah-anda/#jr-survei",
+      k: "survei lokasi jadwal kunjungan whatsapp jatimulya",
     },
     {
       t: "Cara pesan rumah",

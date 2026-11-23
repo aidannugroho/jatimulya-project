@@ -142,6 +142,8 @@ Report sudah memiliki 3 halaman dengan urutan berikut:
 - [ ] Data GSC 28 hari terakhir tidak kosong (query, klik, impresi, CTR, posisi).
 - [ ] Sheet CRM mengisi scorecard setelah baris contoh dihapus dan data asli diisi.
 - [ ] Tidak ada angka lead yang dobel karena penjumlahan user lintas event.
+- [ ] Halaman baru `/pilih-rumah-anda/` muncul sebagai `Landing Page` di halaman **Traffic Organik** setelah GSC selesai memproses data.
+- [ ] `page_view` untuk `/pilih-rumah-anda/` tepat satu kali per page load (lihat `docs/GA4_GTM_PANDUAN.md` bagian 10).
 
 ## 8. Catatan metrik organik
 
@@ -160,5 +162,6 @@ Matrix Bisnis tetap memerlukan pengisian manual Google Sheet CRM untuk lead, vis
 
 ## 9. Rujukan terkait
 
-- `docs/GA4_GTM_PANDUAN.md` — konfigurasi GTM/GA4, consent mode, dan daftar event.
+- `docs/GA4_GTM_PANDUAN.md` — konfigurasi GTM/GA4, consent mode, daftar event, dan panel admin.
 - Search Console → **Links → Google Analytics** — tautan GA4 sudah dibuat pada `2026-11-21` oleh `Aidanrn06@gmail.com`.
+- Panel admin `/admin/` menyediakan laporan GA4 Data API dengan filter host bawaan dan mode user unik. Chart di Looker Studio tetap dipakai untuk pelaporan yang bisa dibagikan; panel admin dipakai untuk pengecekan cepat dan tindak lanjut lead.

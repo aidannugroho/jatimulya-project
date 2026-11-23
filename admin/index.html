@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Jatimulya Residence</title>
+  <link rel="icon" href="/wp-content/uploads/2026/11/favicon.png">
+  <link rel="stylesheet" href="/assets/css/jr-admin.css">
+  <script src="/assets/js/jr-admin.js" defer></script>
+</head>
+<body class="jr-admin">
+  <header class="jr-admin-topbar">
+    <div class="brand">Jatimulya Residence — Admin</div>
+    <a href="/" target="_blank" rel="noopener">Lihat website &rarr;</a>
+  </header>
+
+  <main class="jr-admin-main">
+    <section id="jr-login-card" class="jr-card jr-login-wrap">
+      <h1>Masuk Admin</h1>
+      <p class="jr-muted">Halaman internal untuk Lead &amp; Booking, Insight, dan laporan GA4.</p>
+      <form id="jr-login-form">
+        <label class="jr-label" for="jr-password">Kata sandi</label>
+        <input class="jr-input" id="jr-password" type="password" autocomplete="current-password" required>
+        <div class="jr-actions">
+          <button class="jr-btn" type="submit">Masuk</button>
+        </div>
+        <div id="jr-login-status" class="jr-status" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <div id="jr-admin-app" hidden>
+      <div class="jr-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+          <div>
+            <h1>Dashboard Internal</h1>
+            <div class="jr-muted">Sumber data: D1 untuk lead, GA4 Data API untuk perilaku pengunjung.</div>
+          </div>
+          <button class="jr-btn secondary small" id="jr-logout" type="button">Keluar</button>
+        </div>
+        <div class="jr-tabs" role="tablist" aria-label="Menu admin">
+          <button type="button" class="active" data-tab="ringkasan" role="tab" aria-selected="true">Ringkasan</button>
+          <button type="button" data-tab="leads" role="tab" aria-selected="false">Lead &amp; Booking</button>
+          <button type="button" data-tab="intent" role="tab" aria-selected="false">Intent Pengunjung</button>
+          <button type="button" data-tab="trafik" role="tab" aria-selected="false">Traffic Organik</button>
+          <button type="button" data-tab="preset" role="tab" aria-selected="false">Preset Filter</button>
+        </div>
+      </div>
+
+      <section class="jr-panel" id="panel-ringkasan" data-panel="ringkasan">
+        <div class="jr-card">
+          <h2>Insight rule-based</h2>
+          <p class="jr-muted">Dihitung di server dari data lead. Tanpa LLM, tanpa biaya API tambahan.</p>
+          <div id="jr-insight-stats" class="jr-stats"></div>
+          <div id="jr-insight-list" style="margin-top:18px"></div>
+          <div id="jr-insight-status" class="jr-status" role="status" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="jr-panel" id="panel-leads" data-panel="leads" hidden>
+        <div class="jr-card">
+          <h2>Filter Lead</h2>
+          <div class="jr-row">
+            <div>
+              <label class="jr-label" for="lead-q">Cari nama/WA/pesan</label>
+              <input class="jr-input" id="lead-q" type="search" placeholder="Contoh: Budi">
+            </div>
+            <div>
+              <label class="jr-label" for="lead-from">Dari tanggal</label>
+              <input class="jr-input" id="lead-from" type="date">
+            </div>
+            <div>
+              <label class="jr-label" for="lead-to">Sampai tanggal</label>
+              <input class="jr-input" id="lead-to" type="date">
+            </div>
+            <div>
+              <label class="jr-label" for="lead-tipe">Tipe unit</label>
+              <select class="jr-input" id="lead-tipe">
+                <option value="">Semua</option>
+                <option value="Tipe A">Tipe A</option>
+                <option value="Tipe B">Tipe B</option>
+                <option value="Belum yakin">Belum yakin</option>
+              </select>
+            </div>
+            <div>
+              <label class="jr-label" for="lead-email">Status email</label>
+              <select class="jr-input" id="lead-email">
+                <option value="">Semua</option>
+                <option value="sent">Terkirim</option>
+                <option value="failed">Gagal</option>
+                <option value="pending">Pending</option>
+              </select>
+            </div>
+            <div>
+              <label class="jr-label" for="lead-follow">Tindak lanjut</label>
+              <select class="jr-input" id="lead-follow">
+                <option value="">Semua</option>
+                <option value="baru">Baru</option>
+                <option value="dihubungi">Dihubungi</option>
+                <option value="survei">Survei</option>
+                <option value="booking">Booking</option>
+                <option value="ditutup">Ditutup</option>
+              </select>
+            </div>
+            <div>
+              <label class="jr-label" for="lead-source">Halaman sumber</label>
+              <select class="jr-input" id="lead-source">
+                <option value="">Semua</option>
+                <option value="/kontak/">/kontak/</option>
+                <option value="/pilih-rumah-anda/">/pilih-rumah-anda/</option>
+              </select>
+            </div>
+          </div>
+          <div class="jr-actions">
+            <button class="jr-btn" id="lead-apply" type="button">Terapkan filter</button>
+            <button class="jr-btn secondary" id="lead-reset" type="button">Reset</button>
+          </div>
+          <div id="lead-status" class="jr-status" role="status" aria-live="polite"></div>
+          <div class="jr-table-wrap">
+            <table class="jr-table">
+              <thead>
+                <tr>
+                  <th>Waktu</th><th>Nama</th><th>WhatsApp</th><th>Tipe</th><th>Pesan</th><th>Sumber</th><th>Email</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="lead-rows"></tbody>
+            </table>
+          </div>
+          <div class="jr-actions">
+            <button class="jr-btn secondary small" id="lead-prev" type="button">&larr; Sebelumnya</button>
+            <span id="lead-page-info" class="jr-muted"></span>
+            <button class="jr-btn secondary small" id="lead-next" type="button">Berikutnya &rarr;</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="jr-panel" id="panel-intent" data-panel="intent" hidden>
+        <div class="jr-card">
+          <h2>Intent Pengunjung</h2>
+          <p class="jr-muted">Event dan halaman yang dipakai pengunjung sebelum menghubungi tim.</p>
+          <div class="jr-row">
+            <div>
+              <label class="jr-label" for="ga-start">Mulai</label>
+              <input class="jr-input" id="ga-start" type="date" value="30daysAgo">
+            </div>
+            <div>
+              <label class="jr-label" for="ga-end">Sampai</label>
+              <input class="jr-input" id="ga-end" type="date" value="today">
+            </div>
+            <div>
+              <label class="jr-label" for="ga-mode">Mode metrik</label>
+              <select class="jr-input" id="ga-mode">
+                <option value="unique">User unik (utama)</option>
+                <option value="events">Jumlah event</option>
+              </select>
+            </div>
+            <div>
+              <label class="jr-label" for="ga-page">Page path</label>
+              <input class="jr-input" id="ga-page" type="text" placeholder="/pilih-rumah-anda/">
+            </div>
+            <div>
+              <label class="jr-label" for="ga-event">Event name</label>
+              <select class="jr-input" id="ga-event">
+                <option value="">Semua event</option>
+                <option value="page_view">page_view</option>
+                <option value="form_sukses">form_sukses</option>
+                <option value="kpr_hitung">kpr_hitung</option>
+                <option value="unit_pilih">unit_pilih</option>
+                <option value="survei_jadwal">survei_jadwal</option>
+                <option value="wa_klik">wa_klik</option>
+              </select>
+            </div>
+            <div>
+              <label class="jr-label" for="ga-dims">Dimensi (koma)</label>
+              <input class="jr-input" id="ga-dims" type="text" value="pagePath,eventName">
+            </div>
+            <div>
+              <label class="jr-label" for="ga-metrics">Metrik (koma)</label>
+              <input class="jr-input" id="ga-metrics" type="text" value="totalUsers,sessions,screenPageViews,engagedSessions,keyEvents">
+            </div>
+          </div>
+          <div class="jr-row tight" style="margin-top:14px">
+            <div>
+              <label class="jr-label" for="ga-min-engage">Min. engagement rate</label>
+              <input class="jr-input" id="ga-min-engage" type="number" step="0.01" min="0" max="1" placeholder="0.00">
+            </div>
+            <div>
+              <label class="jr-label" for="ga-min-value">Min. JR Value</label>
+              <input class="jr-input" id="ga-min-value" type="number" min="0" placeholder="0">
+            </div>
+            <div>
+              <label class="jr-label" for="ga-limit">Baris</label>
+              <input class="jr-input" id="ga-limit" type="number" min="1" max="100" value="25">
+            </div>
+          </div>
+          <div class="jr-actions">
+            <button class="jr-btn" id="ga-run-intent" type="button">Jalankan laporan</button>
+            <button class="jr-btn secondary" id="ga-realtime" type="button">Realtime</button>
+            <button class="jr-btn secondary" id="ga-preset-save" type="button">Simpan preset</button>
+          </div>
+          <div id="ga-status" class="jr-status" role="status" aria-live="polite"></div>
+          <div class="jr-note">
+            Filter bawaan: Host name <strong>jatimulya-project.pages.dev</strong>. Kekurangan fitur UI GA4 ditambahkan di server: derived engagement rate, key event rate, JR Value, dan mode unik/event.
+          </div>
+          <div class="jr-table-wrap">
+            <table class="jr-table">
+              <thead><tr id="ga-head"></tr></thead>
+              <tbody id="ga-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="jr-panel" id="panel-trafik" data-panel="trafik" hidden>
+        <div class="jr-card">
+          <h2>Traffic Organik</h2>
+          <p class="jr-muted">Preset ini memakai session default channel group dan metrik user unik.</p>
+          <div class="jr-row">
+            <div>
+              <label class="jr-label" for="trafik-start">Mulai</label>
+              <input class="jr-input" id="trafik-start" type="date" value="30daysAgo">
+            </div>
+            <div>
+              <label class="jr-label" for="trafik-end">Sampai</label>
+              <input class="jr-input" id="trafik-end" type="date" value="today">
+            </div>
+            <div>
+              <label class="jr-label" for="trafik-channel">Channel</label>
+              <select class="jr-input" id="trafik-channel">
+                <option value="">Semua kanal</option>
+                <option value="Organic Search">Organic Search</option>
+                <option value="Direct">Direct</option>
+                <option value="Referral">Referral</option>
+                <option value="Organic Social">Organic Social</option>
+              </select>
+            </div>
+          </div>
+          <div class="jr-actions">
+            <button class="jr-btn" id="trafik-run" type="button">Jalankan laporan organik</button>
+          </div>
+          <div id="trafik-status" class="jr-status" role="status" aria-live="polite"></div>
+          <div class="jr-table-wrap">
+            <table class="jr-table">
+              <thead><tr id="trafik-head"></tr></thead>
+              <tbody id="trafik-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="jr-panel" id="panel-preset" data-panel="preset" hidden>
+        <div class="jr-card">
+          <h2>Preset Filter Tersimpan</h2>
+          <p class="jr-muted">Preset disimpan di KV dan dapat dipakai ulang pada panel Intent Pengunjung.</p>
+          <div id="preset-list" class="jr-chip-list"></div>
+          <div id="preset-status" class="jr-status" role="status" aria-live="polite"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
