@@ -181,6 +181,8 @@ Tombol footer memakai atribut bawaan SureCookie `data-surecookie-reconsent`, seh
 - Google Analytics Data API memakai **ID numerik** `564000201` (env `GA4_PROPERTY_ID`), bukan hash URL Admin `a416061740p564000201`. Hash tersebut tetap dipakai di URL dashboard GA4 dan Looker Studio.
 - Service account: `jatimulya-ga4-reader@maximal-plate-435214-v8.iam.gserviceaccount.com` (proyek GCP `maximal-plate-435214-v8`); API `analyticsdata.googleapis.com` sudah diaktifkan. File kunci JSON tidak disimpan di repo, hanya sebagai secret Cloudflare Pages.
 - Setiap laporan admin memakai filter `Host name = jatimulya-project.pages.dev` secara bawaan (kecuali Realtime, yang sudah di-scope ke property).
+- Filter Data API memakai bentuk `FilterExpression` yang benar: `{ filter: { fieldName, stringFilter: { matchType, value, caseSensitive } } }`. `pagePath`/`hostName` tidak berlaku pada Realtime API; endpoint realtime memetakan `pagePath` ke `unifiedScreenName` dan memakai metrik `activeUsers`/`screenPageViews`.
+- Verifikasi `page_view` halaman `/pilih-rumah-anda/`: request `collect` dengan `tid=G-08HP2WJY16`, `en=page_view`, `dl=https://jatimulya-project.pages.dev/pilih-rumah-anda/`; Realtime Data API menampilkan `unifiedScreenName` halaman tersebut dengan `screenPageViews = 1`. Laporan standar GA4 baru menampilkan halaman setelah pemrosesan 24–48 jam.
 - Karena Data API tidak menyediakan `engagement rate` dan `key event rate` sebagai metrik siap pakai di UI, layer server menghitung keduanya:
   - `jr_engagement_rate = engagedSessions / sessions`
   - `jr_key_event_rate = keyEvents / totalUsers`
