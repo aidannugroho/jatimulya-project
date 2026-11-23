@@ -57,6 +57,7 @@
   function showApp() {
     if (loginCard) loginCard.hidden = true;
     if (app) app.hidden = false;
+    loadChart();
     loadInsight();
     loadLeads();
     loadPresets();
@@ -110,6 +111,86 @@
       });
     });
   });
+
+  /* ---------- grafik keseluruhan ---------- */
+
+  function number(value) {
+    return new Intl.NumberFormat("id-ID").format(Number(value || 0));
+  }
+
+  function chartSvg(series, metric) {
+    var width = 720;
+    var height = 240;
+    var pad = { top: 18, right: 20, bottom: 36, left: 48 };
+    var innerWidth = width - pad.left - pad.right;
+    var innerHeight = height - pad.top - pad.bottom;
+    var values = series.map(function (item) { return Number(item.value || 0); });
+    var max = Math.max(1, Math.ceil(Math.max.apply(null, values) * 1.1));
+    var points = values.map(function (value, i) {
+      return {
+        x: pad.left + (series.length === 1 ? innerWidth / 2 : (i / (series.length - 1)) * innerWidth),
+        y: pad.top + innerHeight - (value / max) * innerHeight,
+      };
+    });
+    var line = points.map(function (p) { return p.x.toFixed(1) + "," + p.y.toFixed(1); }).join(" ");
+    var baseY = pad.top + innerHeight;
+    var area = "M" + points[0].x.toFixed(1) + "," + baseY +
+      " L" + points.map(function (p) { return p.x.toFixed(1) + "," + p.y.toFixed(1); }).join(" L") +
+      " L" + points[points.length - 1].x.toFixed(1) + "," + baseY + " Z";
+    var gridValues = [0, 0.25, 0.5, 0.75, 1];
+    var grid = gridValues.map(function (ratio) {
+      var y = pad.top + innerHeight - ratio * innerHeight;
+      return '<line class="chart-grid" x1="' + pad.left + '" y1="' + y.toFixed(1) +
+        '" x2="' + (width - pad.right) + '" y2="' + y.toFixed(1) + '"></line>' +
+        '<text class="chart-label" x="' + (pad.left - 8) + '" y="' + (y + 4).toFixed(1) +
+        '" text-anchor="end">' + number(Math.round(max * ratio)) + "</text>";
+    }).join("");
+    var labelIndexes = [0, Math.floor((series.length - 1) / 2), series.length - 1]
+      .filter(function (value, i, list) { return list.indexOf(value) === i; });
+    var labels = labelIndexes.map(function (i) {
+      return '<text class="chart-label" x="' + points[i].x.toFixed(1) + '" y="' + (height - 10) +
+        '" text-anchor="' + (i === 0 ? "start" : i === series.length - 1 ? "end" : "middle") + '">' +
+        esc(series[i].date.slice(5)) + "</text>";
+    }).join("");
+    var dots = points.map(function (p, i) {
+      return '<circle class="chart-dot" cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="2.5">' +
+        "<title>" + esc(series[i].date) + ": " + number(series[i].value) + "</title></circle>";
+    }).join("");
+    return '<svg viewBox="0 0 ' + width + " " + height + '" xmlns="http://www.w3.org/2000/svg" aria-label="' +
+      esc("Grafik " + metric + " harian") + '">' +
+      "<title>" + esc("Grafik " + metric + " harian") + "</title>" +
+      grid + '<path class="chart-area" d="' + area + '"></path>' +
+      '<polyline class="chart-line" points="' + line + '"></polyline>' + dots + labels + "</svg>";
+  }
+
+  async function loadChart() {
+    var days = $("chart-days") ? $("chart-days").value : "30";
+    var metric = $("chart-metric") ? $("chart-metric").value : "leads";
+    status($("jr-chart-status"), "Memuat grafik…");
+    try {
+      var data = await api("/api/admin/chart?days=" + encodeURIComponent(days) + "&metric=" + encodeURIComponent(metric));
+      if (!data.ok) throw new Error(data.error || "Gagal memuat grafik");
+      var series = data.series || [];
+      $("jr-chart").innerHTML = series.length
+        ? chartSvg(series, metric)
+        : '<p class="jr-muted">Tidak ada data pada rentang ini.</p>';
+      var peak = series.reduce(function (best, item) {
+        return Number(item.value) > Number(best.value) ? item : best;
+      }, series[0] || { date: "-", value: 0 });
+      $("jr-chart-summary").innerHTML = [
+        ["Total", number(data.total)],
+        ["Rata-rata / hari", number(series.length ? Math.round(data.total / series.length) : 0)],
+        ["Puncak", number(peak.value) + " · " + esc(String(peak.date).slice(5))],
+      ].map(function (item) {
+        return "<div><strong>" + item[1] + "</strong><span>" + esc(item[0]) + "</span></div>";
+      }).join("");
+      status($("jr-chart-status"), "Sumber: " + data.source + " · " + data.startDate + " s/d " + data.endDate + ".", "ok");
+    } catch (error) {
+      status($("jr-chart-status"), error.message, "err");
+    }
+  }
+
+  if ($("chart-run")) $("chart-run").addEventListener("click", loadChart);
 
   /* ---------- insight ---------- */
 

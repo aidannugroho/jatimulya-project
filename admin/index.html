@@ -48,6 +48,39 @@
       </div>
 
       <section class="jr-panel" id="panel-ringkasan" data-panel="ringkasan">
+        <div class="jr-card jr-chart-card">
+          <div class="jr-chart-head">
+            <div>
+              <h2>Grafik Keseluruhan</h2>
+              <p class="jr-muted">Ringkasan harian tanpa filter. Filter lanjutan tetap tersedia di tab Lead &amp; Booking, Intent Pengunjung, dan Traffic Organik.</p>
+            </div>
+            <div class="jr-row tight">
+              <div>
+                <label class="jr-label" for="chart-days">Rentang</label>
+                <select class="jr-input" id="chart-days">
+                  <option value="7">7 hari</option>
+                  <option value="30" selected>30 hari</option>
+                  <option value="90">90 hari</option>
+                </select>
+              </div>
+              <div>
+                <label class="jr-label" for="chart-metric">Metrik</label>
+                <select class="jr-input" id="chart-metric">
+                  <option value="leads" selected>Lead masuk</option>
+                  <option value="users">Pengunjung unik (GA4)</option>
+                  <option value="keyEvents">Key event (GA4)</option>
+                </select>
+              </div>
+              <div class="jr-chart-action">
+                <button class="jr-btn" id="chart-run" type="button">Tampilkan grafik</button>
+              </div>
+            </div>
+          </div>
+          <div id="jr-chart-status" class="jr-status" role="status" aria-live="polite"></div>
+          <div id="jr-chart" class="jr-chart" role="img" aria-label="Grafik ringkasan harian"></div>
+          <div id="jr-chart-summary" class="jr-chart-summary"></div>
+        </div>
+
         <div class="jr-card">
           <h2>Insight rule-based</h2>
           <p class="jr-muted">Dihitung di server dari data lead. Tanpa LLM, tanpa biaya API tambahan.</p>

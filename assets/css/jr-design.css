@@ -4,11 +4,31 @@
    Loaded last so it wins over theme/builder styles.
    ============================================================ */
 
-/* ---------- 1. Tipografi ---------- */
+/* ---------- 1. Tipografi ----------
+   Semua h1 mengikuti ukuran halaman Tentang Kami: 56px desktop,
+   30px tablet/mobile, dan selalu rata tengah. */
+h1,
+.entry-content :where(h1),
+h1.jr-h2 {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 @media (min-width: 922px) {
   h1,
-  .entry-content :where(h1) {
+  .entry-content :where(h1),
+  h1.jr-h2 {
     font-size: 56px !important;
+    line-height: 1.3 !important;
+  }
+}
+
+@media (max-width: 921px) {
+  h1,
+  .entry-content :where(h1),
+  h1.jr-h2 {
+    font-size: 30px !important;
     line-height: 1.3 !important;
   }
 }
@@ -32,20 +52,93 @@ header .custom-logo-link img {
   -webkit-filter: none !important;
 }
 
-/* ---------- 2. Container & ritme section ---------- */
-.ast-container {
-  max-width: 1180px !important;
+/* ---------- 2. Container 80% & ritme section ---------- */
+:root {
+  --jr-main-width: 80%;
+  --jr-section-space: 112px;
 }
 
+.site-content > .ast-container,
+.jr-container,
+.site-primary-footer-wrap .ast-builder-grid-row-container-inner,
+.site-below-footer-wrap .ast-builder-grid-row-container-inner {
+  width: var(--jr-main-width) !important;
+  max-width: none !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.ast-container .jr-container {
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.site-primary-footer-wrap .ast-builder-grid-row,
+.site-below-footer-wrap .ast-builder-grid-row,
+.site-primary-footer-wrap .ast-builder-footer-grid-columns,
+.site-below-footer-wrap .ast-builder-footer-grid-columns {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.entry-content > .wp-block-spectra-container,
 .entry-content > .wp-block-spectra-container:not(:first-child) {
-  padding-top: 112px !important;
-  padding-bottom: 112px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-top: var(--jr-section-space) !important;
+  padding-bottom: var(--jr-section-space) !important;
+}
+
+.entry-content > .jr-kontak-head,
+.entry-content > .jr-section-head {
+  padding-top: var(--jr-section-space) !important;
+  padding-bottom: 0 !important;
+}
+
+/* Kontak & Pilih Rumah Anda memakai latar krem yang sama dengan
+   Tentang Kami. Semua section mengikuti ritme 112px desktop / 72px mobile. */
+body.page-id-76 .site-content,
+body.page-id-76 .entry-content,
+body.page-id-76 .jr-kontak-section {
+  background-color: #faf7f2 !important;
+}
+
+.jr-section,
+.jr-section + .jr-section,
+body.page-id-76 .jr-kontak-section {
+  padding-top: var(--jr-section-space) !important;
+  padding-bottom: var(--jr-section-space) !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.jr-kalkulator,
+.jr-unit-picker,
+.jr-survei {
+  width: var(--jr-main-width) !important;
+  max-width: none !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: var(--jr-section-space) !important;
+  margin-bottom: 0 !important;
+}
+
+.jr-kalkulator .jr-container,
+.jr-unit-picker .jr-container,
+.jr-survei .jr-container {
+  width: 100% !important;
+}
+
+.jr-survei {
+  margin-bottom: var(--jr-section-space) !important;
 }
 
 @media (max-width: 782px) {
-  .entry-content > .wp-block-spectra-container:not(:first-child) {
-    padding-top: 72px !important;
-    padding-bottom: 72px !important;
+  :root {
+    --jr-section-space: 72px;
   }
 }
 
@@ -122,7 +215,15 @@ header .custom-logo-link img {
   }
 }
 
-/* ---------- 6. Footer hijau hutan (teks krem) ---------- */
+/* ---------- 6. Footer hijau hutan (teks krem) ----------
+   Footer selalu penuh lebar body, tidak mengikuti container 80%. */
+.site-footer,
+.site-footer .site-primary-footer-wrap,
+.site-footer .site-below-footer-wrap {
+  width: 100% !important;
+  max-width: none !important;
+}
+
 .site-primary-footer-wrap,
 .site-primary-footer-wrap
   :is(h2, h3, p, li, a, span, .widget-title, .wp-block-heading):not(.wp-social-link):not(.wp-block-social-link-anchor) {
@@ -147,27 +248,13 @@ header .custom-logo-link img {
 /* ---------- 8. Container konten kustom ----------
    Dipakai section Fase B/C yang dipasang di luar .ast-container. */
 .jr-container {
-  width: 100%;
-  max-width: 1180px;
+  width: var(--jr-main-width);
+  max-width: none;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 0;
+  padding-right: 0;
   box-sizing: border-box;
-}
-
-@media (max-width: 782px) {
-  .jr-container {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-
-@media (max-width: 544px) {
-  .jr-container {
-    padding-left: 18px;
-    padding-right: 18px;
-  }
 }
 
 /* ---------- 9. Tipografi section kustom ---------- */
@@ -440,12 +527,12 @@ body.page-id-72 [data-spectra-id='128a2ebc'] {
    Tidak memenuhi lebar window sepenuhnya; dibatasi max-width dan
    dikasih margin kiri-kanan agar blok 4 layanan rata dan simetris. */
 body.page-id-74 .site-content > .ast-container {
-  width: auto !important;
-  max-width: 1180px !important;
+  width: var(--jr-main-width) !important;
+  max-width: none !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  padding-left: 40px !important;
-  padding-right: 40px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 body.page-id-74 .entry-content > .wp-block-spectra-container {
@@ -474,27 +561,8 @@ body.page-id-74 .entry-content .jr-cards.jr-cards-2x2 {
   width: 100% !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  padding-left: 40px !important;
-  padding-right: 40px !important;
-}
-
-@media (max-width: 782px) {
-  body.page-id-74 .site-content > .ast-container {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-
-  body.page-id-74 .entry-content .jr-cards.jr-cards-2x2 {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-}
-
-@media (max-width: 544px) {
-  body.page-id-74 .site-content > .ast-container {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 /* Tombol reconsent SureCookie di footer. */
