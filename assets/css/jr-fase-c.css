@@ -9,10 +9,18 @@
   background: #1f4d3a;
   padding: 26px 0;
   margin: 0 0 8px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.jr-trust .jr-container {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 .jr-trust-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
   margin: 0;
   padding: 0;
@@ -22,10 +30,14 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding-left: 14px;
+  box-sizing: border-box;
+  /* 6px kiri + 2px border = 8px kanan: teks tetap pas di tengah kolom,
+     dengan lebar area teks sama seperti sebelum perataan diubah. */
+  padding: 0 8px 0 6px;
+  text-align: center;
   border-left: 2px solid rgba(232, 224, 212, 0.35);
 }
-.jr-trust-item:first-child { border-left: none; padding-left: 0; }
+.jr-trust-item:first-child { border-left: none; padding: 0; }
 .jr-trust-kicker {
   font-family: 'Libre Baskerville', Georgia, serif;
   font-size: 20px;
@@ -39,12 +51,12 @@
   color: #d8cfc2;
 }
 @media (max-width: 921px) {
-  .jr-trust-grid { grid-template-columns: 1fr 1fr; gap: 16px 20px; }
-  .jr-trust-item:nth-child(3) { border-left: none; padding-left: 0; }
+  .jr-trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 20px; }
+  .jr-trust-item:nth-child(3) { border-left: none; padding: 0; }
 }
 @media (max-width: 544px) {
   .jr-trust { padding: 22px 0; }
-  .jr-trust-grid { grid-template-columns: 1fr 1fr; gap: 14px 16px; }
+  .jr-trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
   .jr-trust-kicker { font-size: 17px; }
   .jr-trust-label { font-size: 13px; }
 }
