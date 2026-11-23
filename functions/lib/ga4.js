@@ -2,7 +2,11 @@ const TOKEN_CACHE_KEY = "ga4:oauth-token";
 const API_ROOT = "https://analyticsdata.googleapis.com/v1beta";
 
 function base64Url(input) {
-  const bytes = typeof input === "string" ? new TextEncoder().encode(input) : input;
+  let bytes;
+  if (typeof input === "string") bytes = new TextEncoder().encode(input);
+  else if (input instanceof Uint8Array) bytes = input;
+  else if (input instanceof ArrayBuffer) bytes = new Uint8Array(input);
+  else bytes = new TextEncoder().encode(JSON.stringify(input));
   let binary = "";
   for (const byte of bytes) binary += String.fromCharCode(byte);
   return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
@@ -45,7 +49,7 @@ async function getAccessToken(env) {
     iat: now,
     exp: now + 3600,
   };
-  const unsigned = `${base64Url(header)}.${base64Url(payload)}`;
+  const unsigned = `${base64Url(JSON.stringify(header))}.${base64Url(JSON.stringify(payload))}`;
   const key = await crypto.subtle.importKey(
     "pkcs8",
     pemToDer(sa.private_key),
