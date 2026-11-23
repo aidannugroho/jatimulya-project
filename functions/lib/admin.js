@@ -96,6 +96,37 @@ function readCookie(request) {
   }
 }
 
+function requireSessionSecret(env) {
+  const secret = env.ADMIN_SESSION_SECRET;
+  if (!secret) throw new Error("ADMIN_SESSION_SECRET belum dikonfigurasi");
+  return String(secret);
+}
+
+async function signToken(secret, value) {
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const signature = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(value));
+  return bytesToHex(signature);
+}
+
+async function verifiedToken(env, request) {
+  const raw = readCookie(request);
+  if (!raw) return null;
+  const [token, signature] = raw.split(".");
+  if (!token || !signature || !/^[0-9a-f]{64}$/i.test(token)) return null;
+  try {
+    const expected = await signToken(requireSessionSecret(env), token);
+    return timingSafeEqual(signature, expected) ? token : null;
+  } catch {
+    return null;
+  }
+}
+
 export async function createSession(env, request) {
   const token = randomHex(32);
   const now = Date.now();
@@ -104,16 +135,17 @@ export async function createSession(env, request) {
     JSON.stringify({ createdAt: now, expiresAt: now + SESSION_TTL * 1000, ip: clientIp(request) }),
     { expirationTtl: SESSION_TTL }
   );
-  return token;
+  const signature = await signToken(requireSessionSecret(env), token);
+  return `${token}.${signature}`;
 }
 
 export async function destroySession(env, request) {
-  const token = readCookie(request);
+  const token = await verifiedToken(env, request);
   if (token) await env.JR_ADMIN_KV.delete(`session:${token}`);
 }
 
 export async function getAdminSession(env, request) {
-  const token = readCookie(request);
+  const token = await verifiedToken(env, request);
   if (!token) return null;
   const raw = await env.JR_ADMIN_KV.get(`session:${token}`);
   if (!raw) return null;
