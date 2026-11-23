@@ -54,7 +54,7 @@ export async function onRequestGet(context) {
     if (metric === "leads") {
       const result = await env.JR_LEADS_DB.prepare(
         "SELECT date(created_at) AS day, COUNT(*) AS total FROM leads WHERE date(created_at) BETWEEN ? AND ? GROUP BY day ORDER BY day"
-      ).all(startDate, endDate);
+      ).bind(startDate, endDate).all();
       series = applyValues(blankSeries(startDate, endDate), result.results || [], "day", "total");
       source = "D1 leads";
     } else {
