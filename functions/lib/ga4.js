@@ -110,29 +110,25 @@ function dateRange(startDate, endDate) {
 }
 
 export function buildDimensionFilter(filters = []) {
+  const matchTypes = {
+    EQUAL: "EXACT",
+    NOT_EQUAL: "EXACT",
+    CONTAINS: "CONTAINS",
+    BEGINS_WITH: "BEGINS_WITH",
+    ENDS_WITH: "ENDS_WITH",
+    REGEXP: "FULL_REGEXP",
+    PARTIAL_REGEXP: "PARTIAL_REGEXP",
+  };
   const list = filters
     .filter((f) => f && f.dimensionName && f.value !== undefined && f.value !== "")
     .map((f) => {
       const op = f.operator || "EQUAL";
       const value = String(f.value);
-      if (op === "CONTAINS") {
-        return { fieldName: f.dimensionName, stringMatch: { value, caseSensitive: false } };
-      }
-      if (op === "BEGINS_WITH") {
-        const escaped = value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        return { fieldName: f.dimensionName, stringMatch: { value: `^${escaped}`, caseSensitive: false } };
-      }
-      if (op === "REGEXP") {
-        return { fieldName: f.dimensionName, stringMatch: { value, caseSensitive: false } };
-      }
-      if (op === "NOT_EQUAL") {
-        return {
-          notExpression: {
-            filter: { fieldName: f.dimensionName, stringValue: { value, caseSensitive: false } },
-          },
-        };
-      }
-      return { fieldName: f.dimensionName, stringValue: { value, caseSensitive: false } };
+      const filter = {
+        fieldName: f.dimensionName,
+        stringFilter: { matchType: matchTypes[op] || "EXACT", value, caseSensitive: false },
+      };
+      return op === "NOT_EQUAL" ? { notExpression: { filter } } : { filter };
     });
   if (!list.length) return undefined;
   if (list.length === 1) return list[0];
@@ -141,15 +137,17 @@ export function buildDimensionFilter(filters = []) {
 
 export function buildMetricFilter(filters = []) {
   const ops = {
-    EQUAL: "equal",
-    GREATER_THAN: "greaterThan",
-    LESS_THAN: "lessThan",
+    EQUAL: "EQUAL",
+    GREATER_THAN: "GREATER_THAN",
+    LESS_THAN: "LESS_THAN",
   };
   const list = filters
     .filter((f) => f && f.metricName && f.value !== undefined && f.value !== "")
     .map((f) => ({
-      fieldName: f.metricName,
-      [ops[f.operator] || "greaterThan"]: String(f.value),
+      filter: {
+        fieldName: f.metricName,
+        numberFilter: { operation: ops[f.operator] || "GREATER_THAN", value: Number(f.value) },
+      },
     }));
   if (!list.length) return undefined;
   if (list.length === 1) return list[0];
