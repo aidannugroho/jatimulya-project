@@ -84,7 +84,8 @@ async function getAccessToken(env) {
 
 async function ga4Fetch(env, path, body) {
   const token = await getAccessToken(env);
-  const propertyId = env.GA4_PROPERTY_ID || "a416061740p564000201";
+  // Data API memakai ID numerik (564000201), bukan hash URL Admin (a416061740p564000201).
+  const propertyId = env.GA4_PROPERTY_ID || "564000201";
   const res = await fetch(`${API_ROOT}/properties/${propertyId}${path}`, {
     method: body ? "POST" : "GET",
     headers: {

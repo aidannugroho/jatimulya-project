@@ -178,6 +178,8 @@ Tombol footer memakai atribut bawaan SureCookie `data-surecookie-reconsent`, seh
 - Panel internal tersedia di `/admin/` dan dilindungi kata sandi yang disimpan sebagai Pages secret `ADMIN_PASSWORD_HASH` (PBKDF2-SHA256, 100.000 iterasi). Nilai password tidak tersimpan di repo maupun dokumentasi.
 - Endpoint `/api/admin/ga4`, `/api/admin/ga4/realtime`, dan `/api/admin/ga4/metadata` memanggil Google Analytics Data API v1beta lewat service account.
 - Service account dibaca dari Pages secret `GA4_SERVICE_ACCOUNT_JSON`; email service account harus diberi peran **Viewer** pada property GA4 `a416061740p564000201`.
+- Google Analytics Data API memakai **ID numerik** `564000201` (env `GA4_PROPERTY_ID`), bukan hash URL Admin `a416061740p564000201`. Hash tersebut tetap dipakai di URL dashboard GA4 dan Looker Studio.
+- Service account: `jatimulya-ga4-reader@maximal-plate-435214-v8.iam.gserviceaccount.com` (proyek GCP `maximal-plate-435214-v8`); API `analyticsdata.googleapis.com` sudah diaktifkan. File kunci JSON tidak disimpan di repo, hanya sebagai secret Cloudflare Pages.
 - Setiap laporan admin memakai filter `Host name = jatimulya-project.pages.dev` secara bawaan (kecuali Realtime, yang sudah di-scope ke property).
 - Karena Data API tidak menyediakan `engagement rate` dan `key event rate` sebagai metrik siap pakai di UI, layer server menghitung keduanya:
   - `jr_engagement_rate = engagedSessions / sessions`
